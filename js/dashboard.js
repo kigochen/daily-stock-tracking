@@ -43,10 +43,14 @@ const C = {
 };
 
 // ─── Entry Point ───────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  console.log('[QuantBoard] DOM loaded, initializing charts...');
   initCharts();
   bindEvents();
-  loadSymbol(currentSymbol);
+  // Ensure chart series are fully bound before loading data
+  await new Promise(resolve => setTimeout(resolve, 100));
+  console.log('[QuantBoard] initCharts done, candleSeries:', typeof candleSeries, 'mainChart:', typeof mainChart);
+  await loadSymbol(currentSymbol);
   setInterval(() => loadSymbol(currentSymbol), REFRESH_MS);
 });
 
@@ -144,6 +148,7 @@ async function loadSymbol(symbol) {
   currentSymbol = symbol;
   showLoadingState(true);
   console.log('[QuantBoard] loadSymbol start:', symbol);
+  console.log('[QuantBoard] loadSymbol — candleSeries type:', typeof candleSeries, 'value:', candleSeries);
   try {
     const [ohlcvRes, metaRes] = await Promise.all([
       fetch(`${DATA_DIR}${symbol}_daily.json?t=${Date.now()}`),
@@ -154,12 +159,16 @@ async function loadSymbol(symbol) {
 
     const ohlcv = await ohlcvRes.json();
     lastData = await metaRes.json();
+    console.log('[QuantBoard] JSON parsed, ohlcv rows:', ohlcv.length);
+    console.log('[QuantBoard] loadSymbol — candleSeries after fetch:', typeof candleSeries, 'value:', candleSeries);
 
     // Progressive: show last 30 immediately
     const recent30 = ohlcv.slice(-30);
+    console.log('[QuantBoard] rendering recent30, ohlcv.length:', recent30.length);
     renderCharts(recent30);
 
     // Then render full dataset
+    console.log('[QuantBoard] rendering full dataset, ohlcv.length:', ohlcv.length);
     renderCharts(ohlcv);
     updateMetaUI(lastData[symbol], symbol);
     updateSummary(lastData);
