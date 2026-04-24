@@ -95,11 +95,15 @@ function initCharts() {
     // Main chart: Candlestick + MA lines
     const container = document.getElementById('mainChart');
 
-    // ⚡ Mobile fix: wait for CSS media query to apply before measuring
+    // Mobile fix: read viewport dimensions BEFORE RAF to avoid CSS-not-yet-applied issue.
+    // On Android (414x896), container.clientWidth/clientHeight may still be 0
+    // inside RAF callback because CSS media queries haven't fired yet.
+    const fixedWidth  = window.innerWidth;
+    const fixedHeight = Math.min(window.innerHeight * 0.45, 400);
+
     requestAnimationFrame(() => {
-      // Fix Android viewport: fallback when CSS height hasn't applied yet
-      const containerWidth  = container.clientWidth  || Math.min(window.innerWidth,  800);
-      const containerHeight = container.clientHeight || Math.min(window.innerHeight * 0.45, 400);
+      const containerWidth  = container.clientWidth  || fixedWidth;
+      const containerHeight = container.clientHeight || fixedHeight;
 
       mainChart = LightweightCharts.createChart(container, {
         layout: { background: { color: bg }, textColor: C.text },
