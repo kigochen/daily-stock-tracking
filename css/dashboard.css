@@ -239,10 +239,45 @@ body {
 
 /* ─── Chart Area (K-line + sub-panels) ───────────────── */
 #chartArea {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 6px;
   margin-top: 10px;
+  transition: opacity 0.3s ease;
+}
+
+#chartArea.loading {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Loading skeleton shimmer */
+#chartArea::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  pointer-events: none;
+  z-index: 10;
+  border-radius: 6px;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Progressive render flash prevention */
+#chartArea:not(.loading) {
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0.7; }
+  to   { opacity: 1; }
 }
 
 #mainChart {

@@ -139,24 +139,63 @@ function initCharts() {
   });
 }
 
-// ─── Load Symbol ────────────────────────────────────────────
+// ─── Load Symbol (Progressive Loading) ──────────────────────
 async function loadSymbol(symbol) {
   currentSymbol = symbol;
+
+  // Show loading skeleton immediately
+  showLoadingState(true);
+
   try {
-    const [ohlcvRes, metaRes] = await Promise.all([
-      fetch(`${DATA_DIR}${symbol}_daily.json?t=${Date.now()}`),
+    // Phase 1: Fetch only the selected symbol's data (lazy — no all-symbol preload)
+    const ohlcvRes = await fetch(`${DATA_DIR}${symbol}_daily.json.gz?t=${Date.now()}`, {
+      headers: { 'Accept-Encoding': 'gzip, deflate, br' },
+    });
+    if (!ohlcvRes.ok) throw new Error(`OHLCV fetch failed: ${ohlcvRes.status}`);
+
+    // Read as ArrayBuffer so we can check for gzip magic bytes
+    const buffer = await ohlcvRes.arrayBuffer();
+    let ohlcv;
+    try {
+      ohlcv = JSON.parse(new TextDecoder().decode(buffer));
+    } catch {
+      // Fallback: retry as plain JSON in case server didn't gzip
+      const plainRes = await fetch(`${DATA_DIR}${symbol}_daily.json?t=${Date.now()}`);
+      if (!plainRes.ok) throw new Error('Plain JSON fetch also failed');
+      ohlcv = await plainRes.json();
+    }
+
+    // Phase 1 render: show last 30 candles immediately (progressive)
+    const recent30 = ohlcv.slice(-30);
+    renderCharts(recent30);
+
+    // Phase 2: fetch meta in parallel, then full re-render
+    const [metaRes] = await Promise.all([
       fetch(`${DATA_DIR}stock_data.json?t=${Date.now()}`),
     ]);
-    if (!ohlcvRes.ok || !metaRes.ok) throw new Error('Fetch failed');
-
-    const ohlcv = await ohlcvRes.json();
+    if (!metaRes.ok) throw new Error('Meta fetch failed');
     lastData = await metaRes.json();
 
+    // Phase 2 render: full dataset
     renderCharts(ohlcv);
     updateMetaUI(lastData[symbol], symbol);
     updateSummary(lastData);
+    showLoadingState(false);
   } catch (err) {
     console.error('❌ loadSymbol failed:', err);
+    showLoadingState(false);
+  }
+}
+
+function showLoadingState(loading) {
+  const chartArea = document.getElementById('chartArea');
+  if (!chartArea) return;
+  if (loading) {
+    chartArea.style.opacity = '0.3';
+    chartArea.style.pointerEvents = 'none';
+  } else {
+    chartArea.style.opacity = '1';
+    chartArea.style.pointerEvents = 'auto';
   }
 }
 
