@@ -282,12 +282,14 @@ body {
 
 #mainChart {
   width: 100%;
+  height: 360px;
   border-radius: 6px;
   overflow: hidden;
 }
 
 .sub-chart {
   width: 100%;
+  height: 90px;
   border-radius: 6px;
   overflow: hidden;
 }
