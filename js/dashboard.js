@@ -559,7 +559,8 @@ function updateMetaUI(info, symbol) {
   };
   set('indMA120', lastOhlcv ? latestMA(lastOhlcv, 120) : null);
   set('indMA240', lastOhlcv ? latestMA(lastOhlcv, 240) : null);
-  console.log('[QuantBoard] set indRSI, info.rsi6=', info.rsi6); set('indRSI',  info.rsi6);
+  console.log('[QuantBoard] set indRSI, info.rsi6=', info.rsi6);
+  set('indRSI',  info.rsi6);
   if (info.kd) {
     set('indK', info.kd.k);
     set('indD', info.kd.d);
