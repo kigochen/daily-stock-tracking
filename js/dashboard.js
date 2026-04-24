@@ -147,17 +147,13 @@ async function loadSymbol(symbol) {
   showLoadingState(true);
 
   try {
-    // Phase 1: Fetch only the selected symbol's data (lazy — no all-symbol preload)
-    const ohlcvRes = await fetch(`${DATA_DIR}${symbol}_daily.json.gz?t=${Date.now()}`, {
-      headers: { 'Accept-Encoding': 'gzip, deflate, br' },
-    });
+    // Phase 1: Fetch gzipped JSON — browser auto-decompresses via Content-Encoding
+    const ohlcvRes = await fetch(`${DATA_DIR}${symbol}_daily.json.gz?t=${Date.now()}`);
     if (!ohlcvRes.ok) throw new Error(`OHLCV fetch failed: ${ohlcvRes.status}`);
 
-    // Read as ArrayBuffer so we can check for gzip magic bytes
-    const buffer = await ohlcvRes.arrayBuffer();
     let ohlcv;
     try {
-      ohlcv = JSON.parse(new TextDecoder().decode(buffer));
+      ohlcv = await ohlcvRes.json(); // browser handles gzip transparently
     } catch {
       // Fallback: retry as plain JSON in case server didn't gzip
       const plainRes = await fetch(`${DATA_DIR}${symbol}_daily.json?t=${Date.now()}`);
