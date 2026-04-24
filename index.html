@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuantBoard - K 線圖追蹤</title>
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <script src="js/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <h1>📊 QuantBoard</h1>
+      <span class="subtitle">K 線圖追蹤 Dashboard</span>
+    </div>
+    <div class="header-right">
+      <span class="last-updated" id="lastUpdated">--</span>
+      <select id="symbolSelector" class="symbol-selector">
+        <option value="twii">🇹🇼 加權指數 (TWII)</option>
+        <option value="spy">🇺🇸 SPY (S&P 500 ETF)</option>
+        <option value="qqq">🇺🇸 QQQ (Nasdaq 100)</option>
+        <option value="vix">😱 VIX 恐慌指數</option>
+        <option value="2330">🇹🇼 2330 臺積電</option>
+        <option value="dxy">💵 DXY 美元指數</option>
+        <option value="goog">🇺🇸 GOOG Alphabet</option>
+        <option value="mu">🇺🇸 MU Micron</option>
+        <option value="soxx">🇺🇸 SOXX 半導體</option>
+        <option value="poet">🇺🇸 POET Technologies</option>
+        <option value="arm">🇺🇸 ARM Holdings</option>
+        <option value="aapl">🇺🇸 AAPL Apple</option>
+        <option value="tsla">🇺🇸 TSLA Tesla</option>
+        <option value="nbis">🇺🇸 NBIS Nebius</option>
+        <option value="smr">🇺🇸 SMR NuScale</option>
+        <option value="avgo">🇺🇸 AVGO Broadcom</option>
+        <option value="cohr">🇺🇸 COHR Coherent</option>
+        <option value="amkr">🇺🇸 AMKR Amkor</option>
+        <option value="glxy">🇨🇦 GLXY Galaxy Digital</option>
+        <option value="wolf">🇺🇸 WOLF Wolfspeed</option>
+        <option value="oust">🇺🇸 OUST Ouster</option>
+        <option value="irdm">🇺🇸 IRDM Iridium</option>
+        <option value="coin">🇺🇸 COIN Coinbase</option>
+      </select>
+      <select id="timeframeSelector" class="timeframe-selector">
+        <option value="D">日線</option>
+      </select>
+      <button class="btn-refresh" id="refreshBtn">🔄 更新</button>
+    </div>
+  </header>
+
+  <!-- K-line chart -->
+  <main class="main-grid">
+    <section class="card card-full" id="klineCard">
+      <div class="card-header">
+        <h2 id="chartTitle">📈 加權指數 (TWII)</h2>
+        <div class="signal-badge" id="chartSignal"></div>
+      </div>
+      <div class="price-row">
+        <span class="price" id="chartPrice">--</span>
+        <span class="change" id="chartChange">--</span>
+      </div>
+      <div class="indicator-row" id="indicatorRow">
+        <span>MA5: <b id="indMA5">--</b></span>
+        <span>MA20: <b id="indMA20">--</b></span>
+        <span>MA60: <b id="indMA60">--</b></span>
+        <span>RSI(6): <b id="indRSI">--</b></span>
+        <span>KD K: <b id="indK">--</b></span>
+        <span>KD D: <b id="indD">--</b></span>
+      </div>
+
+      <!-- Main chart area: K-line + MA + Volume + KD/RSI/MACD sub-panels -->
+      <div id="chartArea">
+        <div id="mainChart"></div>
+        <div id="volumeChart" class="sub-chart"></div>
+        <div id="kdPanel" class="sub-panel">
+          <div class="sub-panel-title">KD<span class="toggle-panel" data-panel="kdPanel">▼</span></div>
+          <div id="kdChart" class="sub-chart"></div>
+        </div>
+        <div id="rsiPanel" class="sub-panel collapsed">
+          <div class="sub-panel-title">RSI(6)<span class="toggle-panel" data-panel="rsiPanel">▶</span></div>
+          <div id="rsiChart" class="sub-chart"></div>
+        </div>
+        <div id="macdPanel" class="sub-panel collapsed">
+          <div class="sub-panel-title">MACD<span class="toggle-panel" data-panel="macdPanel">▶</span></div>
+          <div id="macdChart" class="sub-chart"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Market Summary -->
+    <section class="card card-wide" id="summaryCard">
+      <div class="card-header">
+        <h2>📋 市場綜合信號</h2>
+      </div>
+      <div class="summary-grid" id="summaryGrid">
+        <div class="summary-item" id="sumBullish">看多 🔼</div>
+        <div class="summary-item" id="sumNeutral">中立 ➡️</div>
+        <div class="summary-item" id="sumBearish">看空 🔽</div>
+      </div>
+      <div class="signal-details" id="signalDetails">
+        <p id="signalText">載入中...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>資料來源：Yahoo Finance · 圖表：TradingView Lightweight Charts · 更新頻率：每 60 秒</p>
+  </footer>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

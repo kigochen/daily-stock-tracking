@@ -1,0 +1,293 @@
+/* ─── Reset & Base ─────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0d1117;
+  --card-bg:   #161b22;
+  --card-hover:#1c2128;
+  --border:    #30363d;
+  --text:      #e6edf3;
+  --text-muted:#8b949e;
+  --green:     #3fb950;
+  --red:       #f85149;
+  --yellow:    #d29922;
+  --blue:      #58a6ff;
+  --purple:    #a371f7;
+  --pink:      #db61a2;
+  --font:      -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Header ───────────────────────────────────────── */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-left h1 { font-size: 1.4rem; font-weight: 700; }
+.subtitle { font-size: 0.8rem; color: var(--text-muted); margin-left: 10px; }
+
+.header-right { display: flex; align-items: center; gap: 12px; }
+
+.last-updated { font-size: 0.75rem; color: var(--text-muted); }
+
+.btn-refresh {
+  padding: 6px 14px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.btn-refresh:hover { opacity: 0.85; }
+
+/* ─── Main Grid ─────────────────────────────────────── */
+.main-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+  padding: 14px;
+  flex: 1;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: background 0.2s;
+}
+.card:hover { background: var(--card-hover); }
+
+.card-full { grid-column: 1 / -1; }
+.card-wide { grid-column: span 2; }
+
+@media (max-width: 640px) {
+  .card-wide { grid-column: 1; }
+  .main-grid { grid-template-columns: 1fr; }
+}
+
+/* ─── Card Header ───────────────────────────────────── */
+.card-header { display: flex; justify-content: space-between; align-items: center; }
+.card-header h2 { font-size: 0.95rem; font-weight: 600; }
+.card-header .ticker { font-size: 0.72rem; color: var(--text-muted); margin-left: 6px; font-weight: 400; }
+
+.signal-badge {
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+.signal-badge.bullish { background: rgba(63,185,80,0.15); color: var(--green); border: 1px solid var(--green); }
+.signal-badge.bearish { background: rgba(248,81,73,0.15); color: var(--red); border: 1px solid var(--red); }
+.signal-badge.neutral { background: rgba(139,148,158,0.15); color: var(--text-muted); border: 1px solid var(--border); }
+.signal-badge.overbought { background: rgba(248,81,73,0.2); color: var(--red); }
+.signal-badge.oversold { background: rgba(63,185,80,0.2); color: var(--green); }
+
+/* ─── Price Row ─────────────────────────────────────── */
+.price-row { display: flex; align-items: baseline; gap: 10px; }
+.price { font-size: 1.8rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.change { font-size: 0.9rem; font-weight: 600; }
+.change.up { color: var(--green); }
+.change.down { color: var(--red); }
+.change.flat { color: var(--text-muted); }
+
+/* ─── Indicator Row (TWII) ──────────────────────────── */
+.indicator-row {
+  display: flex;
+  gap: 14px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+.indicator-row b { color: var(--text); margin-left: 2px; }
+
+/* ─── Indicator Mini ────────────────────────────────── */
+.indicator-mini { display: flex; gap: 10px; flex-wrap: wrap; }
+.ind-item {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.04);
+  padding: 3px 8px;
+  border-radius: 5px;
+}
+.ind-item b { color: var(--blue); margin-left: 3px; }
+
+/* ─── Chart ─────────────────────────────────────────── */
+.chart-container { height: 160px; margin-top: 4px; }
+.chart-container-sm { height: 100px; margin-top: 4px; }
+
+/* ─── Summary Card ──────────────────────────────────── */
+.summary-grid {
+  display: flex;
+  gap: 12px;
+  margin: 6px 0;
+}
+.summary-item {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: rgba(255,255,255,0.04);
+}
+.summary-item.up   { color: var(--green); border: 1px solid rgba(63,185,80,0.3); }
+.summary-item.neutral { color: var(--yellow); border: 1px solid rgba(210,153,34,0.3); }
+.summary-item.down { color: var(--red);    border: 1px solid rgba(248,81,73,0.3); }
+
+.signal-details {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.03);
+  border-radius: 6px;
+  padding: 8px 12px;
+  border-left: 3px solid var(--border);
+}
+
+/* ─── Footer ────────────────────────────────────────── */
+.footer {
+  text-align: center;
+  padding: 12px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+}
+
+/* ─── Color Helpers ──────────────────────────────────── */
+.text-green  { color: var(--green) !important; }
+.text-red    { color: var(--red)   !important; }
+.text-muted  { color: var(--text-muted); }
+
+/* ─── US Stocks Grid ───────────────────────────────────── */
+.us-stocks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.us-stock-item {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: background 0.2s;
+}
+.us-stock-item:hover { background: rgba(255,255,255,0.06); }
+
+.us-stock-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.us-stock-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.us-stock-price {
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+.us-stock-indicators {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.us-stock-indicators b { color: var(--blue); margin-left: 1px; }
+
+/* ─── Symbol / Timeframe Selectors ───────────────────── */
+.symbol-selector,
+.timeframe-selector {
+  padding: 6px 10px;
+  background: var(--card-hover);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+/* ─── Chart Area (K-line + sub-panels) ───────────────── */
+#chartArea {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+#mainChart {
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.sub-chart {
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.sub-panel {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  max-height: 130px;
+}
+
+.sub-panel.collapsed {
+  max-height: 34px;
+  overflow: hidden;
+}
+
+.sub-panel-title {
+  background: rgba(255,255,255,0.03);
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.sub-panel-title:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+.toggle-panel {
+  font-size: 0.65rem;
+  color: var(--blue);
+}
