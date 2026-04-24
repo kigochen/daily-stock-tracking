@@ -132,7 +132,7 @@ function initSeriesAndLoadData(containerWidth, containerHeight) {
   // Candlestick series — Fix 6: enhanced try-catch with diagnostics
   try {
     console.log('[QuantBoard] Attempting to add CandlestickSeries...');
-    candleSeries = mainChart.addSeries(LightweightCharts.CandlestickSeries, {
+    candleSeries = mainChart.addCandlestickSeries({
       upColor: C.up, downColor: C.down,
       borderUpColor: C.up, borderDownColor: C.down,
       wickUpColor: C.up, wickDownColor: C.down,
@@ -144,9 +144,9 @@ function initSeriesAndLoadData(containerWidth, containerHeight) {
   }
 
   // MA line series (persistent handles)
-  ma5Series  = mainChart.addSeries(LightweightCharts.LineSeries, { color: C.ma5,  lineWidth: 1, title: 'MA5' });
-  ma20Series = mainChart.addSeries(LightweightCharts.LineSeries, { color: C.ma20, lineWidth: 1, title: 'MA20' });
-  ma60Series = mainChart.addSeries(LightweightCharts.LineSeries, { color: C.ma60, lineWidth: 1, title: 'MA60' });
+  ma5Series  = mainChart.addLineSeries({ color: C.ma5,  lineWidth: 1, title: 'MA5' });
+  ma20Series = mainChart.addLineSeries({ color: C.ma20, lineWidth: 1, title: 'MA20' });
+  ma60Series = mainChart.addLineSeries({ color: C.ma60, lineWidth: 1, title: 'MA60' });
   console.log('[QuantBoard] MA series created');
 
   // ⚡ Volume chart — use RAF to ensure DOM dimensions are correct
@@ -422,7 +422,7 @@ function renderCharts(ohlcv) {
 
   // ── Volume chart ──
   if (volSeries) { volumeChart.removeSeries(volSeries); volSeries = null; }
-  volSeries = volumeChart.addSeries(LightweightCharts.HistogramSeries, {
+  volSeries = volumeChart.addHistogramSeries({ color: '#26a69a', priceScaleId: '' });
     color: C.up, priceFormat: { type: 'volume' }, priceScaleId: '',
   });
   volSeries.setData(ohlcv.map(r => ({
@@ -436,8 +436,8 @@ function renderCharts(ohlcv) {
   if (kSeries) { kdChart.removeSeries(kSeries); kSeries = null; }
   if (dSeries) { kdChart.removeSeries(dSeries); dSeries = null; }
   const kdData = computeKD(ohlcv);
-  kSeries = kdChart.addSeries(LightweightCharts.LineSeries, { color: '#ffa501', lineWidth: 1 });
-  dSeries = kdChart.addSeries(LightweightCharts.LineSeries, { color: '#58a6ff', lineWidth: 1 });
+  kSeries = kdChart.addLineSeries({ color: '#ffa501', lineWidth: 1 }); color: '#ffa501', lineWidth: 1 });
+  dSeries = kdChart.addLineSeries({ color: '#58a6ff', lineWidth: 1 }); color: '#58a6ff', lineWidth: 1 });
   kSeries.setData(kdData.map(r => ({ time: r.time, value: r.k })));
   dSeries.setData(kdData.map(r => ({ time: r.time, value: r.d })));
   kdChart.timeScale().fitContent();
@@ -445,7 +445,7 @@ function renderCharts(ohlcv) {
 
   // ── RSI chart ──
   if (rsiSeries) { rsiChart.removeSeries(rsiSeries); rsiSeries = null; }
-  rsiSeries = rsiChart.addSeries(LightweightCharts.LineSeries, {
+  rsiSeries = rsiChart.addLineSeries({ color: C.ma5, lineWidth: 1 });
     color: '#bc8cff', lineWidth: 1,
     priceLines: [
       { price: 70, color: '#f85149', lineWidth: 1, lineStyle: 2 },
@@ -461,11 +461,11 @@ function renderCharts(ohlcv) {
   if (difSeries)  { macdChart.removeSeries(difSeries);  difSeries = null; }
   if (sigSeries)  { macdChart.removeSeries(sigSeries);  sigSeries = null; }
   const macdData = computeMACD(ohlcv);
-  histSeries = macdChart.addSeries(LightweightCharts.HistogramSeries, { color: C.ma5, priceScaleId: '' });
+  histSeries = macdChart.addHistogramSeries({ color: C.ma5, priceScaleId: '' }); color: C.ma5, priceScaleId: '' });
   histSeries.setData(macdData.map(r => ({ time: r.time, value: r.hist, color: r.hist >= 0 ? C.up : C.down })));
-  difSeries = macdChart.addSeries(LightweightCharts.LineSeries, { color: C.ma20, lineWidth: 1 });
+  difSeries = macdChart.addLineSeries({ color: C.ma20, lineWidth: 1 }); color: C.ma20, lineWidth: 1 });
   difSeries.setData(macdData.map(r => ({ time: r.time, value: r.dif })));
-  sigSeries = macdChart.addSeries(LightweightCharts.LineSeries, { color: C.down, lineWidth: 1 });
+  sigSeries = macdChart.addLineSeries({ color: C.down, lineWidth: 1 }); color: C.down, lineWidth: 1 });
   sigSeries.setData(macdData.map(r => ({ time: r.time, value: r.signal })));
   macdChart.timeScale().fitContent();
   macdChart.resize(macdChart.width(), macdChart.height());
