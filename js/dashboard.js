@@ -142,37 +142,22 @@ function initCharts() {
 // ─── Load Symbol (Progressive Loading) ──────────────────────
 async function loadSymbol(symbol) {
   currentSymbol = symbol;
-
-  // Show loading skeleton immediately
   showLoadingState(true);
-
   try {
-    // Phase 1: Fetch gzipped JSON — browser auto-decompresses via Content-Encoding
-    const ohlcvRes = await fetch(`${DATA_DIR}${symbol}_daily.json.gz?t=${Date.now()}`);
-    if (!ohlcvRes.ok) throw new Error(`OHLCV fetch failed: ${ohlcvRes.status}`);
+    const [ohlcvRes, metaRes] = await Promise.all([
+      fetch(`${DATA_DIR}${symbol}_daily.json?t=${Date.now()}`),
+      fetch(`${DATA_DIR}stock_data.json?t=${Date.now()}`),
+    ]);
+    if (!ohlcvRes.ok || !metaRes.ok) throw new Error('Fetch failed');
 
-    let ohlcv;
-    try {
-      ohlcv = await ohlcvRes.json(); // browser handles gzip transparently
-    } catch {
-      // Fallback: retry as plain JSON in case server didn't gzip
-      const plainRes = await fetch(`${DATA_DIR}${symbol}_daily.json?t=${Date.now()}`);
-      if (!plainRes.ok) throw new Error('Plain JSON fetch also failed');
-      ohlcv = await plainRes.json();
-    }
+    const ohlcv = await ohlcvRes.json();
+    lastData = await metaRes.json();
 
-    // Phase 1 render: show last 30 candles immediately (progressive)
+    // Progressive: show last 30 immediately
     const recent30 = ohlcv.slice(-30);
     renderCharts(recent30);
 
-    // Phase 2: fetch meta in parallel, then full re-render
-    const [metaRes] = await Promise.all([
-      fetch(`${DATA_DIR}stock_data.json?t=${Date.now()}`),
-    ]);
-    if (!metaRes.ok) throw new Error('Meta fetch failed');
-    lastData = await metaRes.json();
-
-    // Phase 2 render: full dataset
+    // Then render full dataset
     renderCharts(ohlcv);
     updateMetaUI(lastData[symbol], symbol);
     updateSummary(lastData);

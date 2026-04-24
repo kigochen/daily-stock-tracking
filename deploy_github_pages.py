@@ -73,15 +73,13 @@ def deploy():
         print(f"  ⚠️  Missing data/stock_data.json")
         errors.append("Missing: data/stock_data.json")
 
-    # Copy all *_daily.json files + their gzip versions
+    # Copy all *_daily.json files
     daily_files = list((SRC_DIR / "data").glob("*_daily.json"))
-    daily_gz    = list((SRC_DIR / "data").glob("*_daily.json.gz"))
-    all_data   = daily_files + daily_gz
-    if not all_data:
+    if not daily_files:
         print(f"  ⚠️  No *_daily.json* files found in data/")
         errors.append("No *_daily.json* files found")
     else:
-        for f in all_data:
+        for f in daily_files:
             shutil.copy2(f, DST_DIR / "data" / f.name)
             print(f"  ✅ Copied data/{f.name}")
 
