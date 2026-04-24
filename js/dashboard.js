@@ -147,10 +147,11 @@ function initCharts() {
     console.log('[QuantBoard] macdChart created');
 
     // Sync time scales across all charts
-    mainChart.timeScale().subscribe('visibleLogicalRangeChange', () => {
-      const range = mainChart.timeScale().getVisibleLogicalRange();
+    const ts = mainChart.timeScale();
+    ts.subscribeVisibleLogicalRangeChange((range) => {
+      if (!range) return;
       [volumeChart, kdChart, rsiChart, macdChart].forEach(ch => {
-        if (range) ch.timeScale().setVisibleLogicalRange(range);
+        ch.timeScale().setVisibleLogicalRange(range);
       });
     });
     console.log('[QuantBoard] initCharts completed successfully');
