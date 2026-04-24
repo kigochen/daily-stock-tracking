@@ -85,84 +85,120 @@ function initCharts() {
   try {
     // Main chart: Candlestick + MA lines
     const container = document.getElementById('mainChart');
-    const containerWidth = container.clientWidth || 800;
 
-    mainChart = LightweightCharts.createChart(container, {
-      layout: { background: { color: bg }, textColor: C.text },
-      grid: { vertLines: { color: C.grid }, horzLines: { color: C.grid } },
-      crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
-      timeScale: { borderColor: C.grid, timeVisible: true, secondsVisible: false },
-      rightPriceScale: { borderColor: C.grid },
-      width: containerWidth,
-      height: 360,
-      autoSize: true,
-      handleScroll: { horzTouchDrag: true, mouseWheel: true, pressedMouseMove: true },
-      handleScale: { mouseWheel: true, pinch: true },
-    });
-    console.log('[QuantBoard] mainChart created:', mainChart ? 'success' : 'NULL');
+    // ⚡ Mobile fix: wait for CSS media query to apply before measuring
+    requestAnimationFrame(() => {
+      const containerWidth  = container.clientWidth || 800;
+      const containerHeight = container.clientHeight || 360;
 
-    // Candlestick series — Fix 6: enhanced try-catch with diagnostics
-    try {
-      console.log('[QuantBoard] Attempting to add CandlestickSeries...');
-      candleSeries = mainChart.addSeries(LightweightCharts.CandlestickSeries, {
-        upColor: C.up, downColor: C.down,
-        borderUpColor: C.up, borderDownColor: C.down,
-        wickUpColor: C.up, wickDownColor: C.down,
+      mainChart = LightweightCharts.createChart(container, {
+        layout: { background: { color: bg }, textColor: C.text },
+        grid: { vertLines: { color: C.grid }, horzLines: { color: C.grid } },
+        crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+        timeScale: { borderColor: C.grid, timeVisible: true, secondsVisible: false },
+        rightPriceScale: { borderColor: C.grid },
+        width: containerWidth,
+        height: containerHeight,
+        autoSize: true,
+        handleScroll: { horzTouchDrag: true, mouseWheel: true, pressedMouseMove: true },
+        handleScale: { mouseWheel: true, pinch: true },
       });
-      console.log('[QuantBoard] ✅ candleSeries created:', typeof candleSeries);
-      console.log('[QuantBoard] candleSeries.data() length:', candleSeries ? candleSeries.data().length : 'N/A');
-    } catch(e) {
-      console.error('[QuantBoard] ❌ CandlestickSeries creation FAILED:', e.message);
-    }
 
-    // MA line series (persistent handles)
-    ma5Series  = mainChart.addSeries(LightweightCharts.LineSeries, { color: C.ma5,  lineWidth: 1, title: 'MA5' });
-    ma20Series = mainChart.addSeries(LightweightCharts.LineSeries, { color: C.ma20, lineWidth: 1, title: 'MA20' });
-    ma60Series = mainChart.addSeries(LightweightCharts.LineSeries, { color: C.ma60, lineWidth: 1, title: 'MA60' });
-    console.log('[QuantBoard] MA series created');
+      // ⚡ Force immediate resize to sync ResizeObserver to correct dimensions
+      mainChart.resize(containerWidth, containerHeight, true);
+      console.log('[QuantBoard] mainChart created:', mainChart ? 'success' : 'NULL');
 
-    // Volume chart
-    volumeChart = LightweightCharts.createChart(document.getElementById('volumeChart'), {
+      // Delegate series creation + data loading to separated function
+      initSeriesAndLoadData(containerWidth, containerHeight);
+    });
+  } catch(err) {
+    console.error('[QuantBoard] initCharts ERROR:', err.message, err.stack);
+  }
+}
+
+// ─── Series Initialization + Data Loading ──────────────────
+function initSeriesAndLoadData(containerWidth, containerHeight) {
+  const bg = C.bg;
+
+  // Candlestick series — Fix 6: enhanced try-catch with diagnostics
+  try {
+    console.log('[QuantBoard] Attempting to add CandlestickSeries...');
+    candleSeries = mainChart.addSeries(LightweightCharts.CandlestickSeries, {
+      upColor: C.up, downColor: C.down,
+      borderUpColor: C.up, borderDownColor: C.down,
+      wickUpColor: C.up, wickDownColor: C.down,
+    });
+    console.log('[QuantBoard] ✅ candleSeries created:', typeof candleSeries);
+    console.log('[QuantBoard] candleSeries.data() length:', candleSeries ? candleSeries.data().length : 'N/A');
+  } catch(e) {
+    console.error('[QuantBoard] ❌ CandlestickSeries creation FAILED:', e.message);
+  }
+
+  // MA line series (persistent handles)
+  ma5Series  = mainChart.addSeries(LightweightCharts.LineSeries, { color: C.ma5,  lineWidth: 1, title: 'MA5' });
+  ma20Series = mainChart.addSeries(LightweightCharts.LineSeries, { color: C.ma20, lineWidth: 1, title: 'MA20' });
+  ma60Series = mainChart.addSeries(LightweightCharts.LineSeries, { color: C.ma60, lineWidth: 1, title: 'MA60' });
+  console.log('[QuantBoard] MA series created');
+
+  // ⚡ Volume chart — use RAF to ensure DOM dimensions are correct
+  requestAnimationFrame(() => {
+    const volContainer = document.getElementById('volumeChart');
+    const volW = volContainer.clientWidth || containerWidth;
+    volumeChart = LightweightCharts.createChart(volContainer, {
       layout: { background: { color: bg }, textColor: C.text },
       grid: { vertLines: { visible: false }, horzLines: { color: C.grid } },
       timeScale: { visible: false },
       rightPriceScale: { borderColor: C.grid },
+      width: volW,
       height: 90,
       autoSize: true,
     });
+    volumeChart.resize(volW, 90, true);
     console.log('[QuantBoard] volumeChart created');
 
     // KD chart
-    kdChart = LightweightCharts.createChart(document.getElementById('kdChart'), {
+    const kdContainer = document.getElementById('kdChart');
+    const kdW = kdContainer.clientWidth || containerWidth;
+    kdChart = LightweightCharts.createChart(kdContainer, {
       layout: { background: { color: bg }, textColor: C.text },
       grid: { vertLines: { visible: false }, horzLines: { color: C.grid } },
       timeScale: { visible: false },
       rightPriceScale: { borderColor: C.grid },
+      width: kdW,
       height: 90,
       autoSize: true,
     });
+    kdChart.resize(kdW, 90, true);
     console.log('[QuantBoard] kdChart created');
 
     // RSI chart
-    rsiChart = LightweightCharts.createChart(document.getElementById('rsiChart'), {
+    const rsiContainer = document.getElementById('rsiChart');
+    const rsiW = rsiContainer.clientWidth || containerWidth;
+    rsiChart = LightweightCharts.createChart(rsiContainer, {
       layout: { background: { color: bg }, textColor: C.text },
       grid: { vertLines: { visible: false }, horzLines: { color: C.grid } },
       timeScale: { visible: false },
       rightPriceScale: { borderColor: C.grid },
+      width: rsiW,
       height: 90,
       autoSize: true,
     });
+    rsiChart.resize(rsiW, 90, true);
     console.log('[QuantBoard] rsiChart created');
 
     // MACD chart
-    macdChart = LightweightCharts.createChart(document.getElementById('macdChart'), {
+    const macdContainer = document.getElementById('macdChart');
+    const macdW = macdContainer.clientWidth || containerWidth;
+    macdChart = LightweightCharts.createChart(macdContainer, {
       layout: { background: { color: bg }, textColor: C.text },
       grid: { vertLines: { visible: false }, horzLines: { color: C.grid } },
       timeScale: { visible: false },
       rightPriceScale: { borderColor: C.grid },
+      width: macdW,
       height: 90,
       autoSize: true,
     });
+    macdChart.resize(macdW, 90, true);
     console.log('[QuantBoard] macdChart created');
 
     // Sync time scales across all charts
@@ -179,8 +215,8 @@ function initCharts() {
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
-        const w = container.clientWidth || 800;
-        mainChart.resize(w, 360);
+        const w = document.getElementById('mainChart').clientWidth || 800;
+        mainChart.resize(w, containerHeight);
         volumeChart.resize(w, 90);
         kdChart.resize(w, 90);
         rsiChart.resize(w, 90);
@@ -188,13 +224,12 @@ function initCharts() {
       }, 200);
     });
 
-    console.log('[QuantBoard] initCharts completed successfully');
-  } catch(err) {
-    console.error('[QuantBoard] initCharts ERROR:', err.message, err.stack);
-  }
+    console.log('[QuantBoard] initSeriesAndLoadData completed successfully');
+    // Load symbol data
+    loadSymbol(currentSymbol || 'twii');
+  });
 }
 
-// ─── Load Symbol (Progressive Loading) ──────────────────────
 async function loadSymbol(symbol) {
   currentSymbol = symbol;
   showLoadingState(true);

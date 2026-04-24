@@ -291,9 +291,11 @@ body {
 @media (max-width: 640px) {
   #mainChart {
     height: calc(100vw * 0.75) !important;
+    min-height: 200px !important;
   }
   .sub-chart {
     height: 70px !important;
+    min-height: 60px !important;
   }
 }
 
