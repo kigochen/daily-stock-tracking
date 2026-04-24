@@ -30,6 +30,7 @@ let histSeries = null, difSeries = null, sigSeries = null;
 let lastData = null;
 let lastOhlcv = null;
 let currentSymbol = 'twii';
+let loadSymbolController = null; // abort in-flight fetch on rapid symbol switches
 
 // ─── Color palette ─────────────────────────────────────────
 const C = {
@@ -248,29 +249,46 @@ function initSeriesAndLoadData(containerWidth, containerHeight) {
     });
 
     console.log('[QuantBoard] initSeriesAndLoadData completed successfully');
-    // Load symbol data
-    loadSymbol(currentSymbol || 'twii');
+    // NOTE: loadSymbol is already called from DOMContentLoaded after initCharts awaits.
+    // Do NOT call again here to avoid duplicate fetch race on init.
   });
 }
 
 async function loadSymbol(symbol) {
+  // Abort any in-flight fetch to prevent stale responses from overwriting fresh data
+  if (loadSymbolController) loadSymbolController.abort();
+  loadSymbolController = new AbortController();
+  const signal = loadSymbolController.signal;
+
   currentSymbol = symbol;
   showLoadingState(true);
   console.log('[QuantBoard] loadSymbol start:', symbol);
   console.log('[QuantBoard] loadSymbol — candleSeries type:', typeof candleSeries, 'value:', candleSeries);
   try {
     const [ohlcvRes, metaRes] = await Promise.all([
-      fetch(`${DATA_DIR}${symbol}_daily.json?t=${Date.now()}`),
-      fetch(`${DATA_DIR}stock_data.json?t=${Date.now()}`),
+      fetch(`${DATA_DIR}${symbol}_daily.json?t=${Date.now()}`, { signal }),
+      fetch(`${DATA_DIR}stock_data.json?t=${Date.now()}`, { signal }),
     ]);
     console.log('[QuantBoard] fetch responses:', symbol, 'ohlcvRes.status:', ohlcvRes.status, 'metaRes.status:', metaRes.status);
     if (!ohlcvRes.ok || !metaRes.ok) throw new Error('Fetch failed');
+
+    // Skip if symbol changed during fetch (aborted by a newer loadSymbol call)
+    if (signal.aborted) {
+      console.log('[QuantBoard] loadSymbol ABORTED for', symbol, '(superseded by newer call)');
+      return;
+    }
 
     const ohlcv = await ohlcvRes.json();
     lastData = await metaRes.json();
     lastOhlcv = ohlcv;
     console.log('[QuantBoard] JSON parsed, ohlcv rows:', ohlcv.length);
     console.log('[QuantBoard] loadSymbol — candleSeries after fetch:', typeof candleSeries, 'value:', candleSeries);
+
+    // Double-check symbol hasn't changed while parsing
+    if (signal.aborted) {
+      console.log('[QuantBoard] loadSymbol ABORTED during parse for', symbol);
+      return;
+    }
 
     // Render full dataset
     console.log('[QuantBoard] rendering full dataset, ohlcv.length:', ohlcv.length);
@@ -285,7 +303,11 @@ async function loadSymbol(symbol) {
     updateSummary(lastData);
     showLoadingState(false);
   } catch (err) {
-    console.error('❌ loadSymbol failed:', err.message, err.stack);
+    if (err.name === 'AbortError') {
+      console.log('[QuantBoard] loadSymbol ABORTED:', symbol);
+    } else {
+      console.error('❌ loadSymbol failed:', err.message, err.stack);
+    }
     showLoadingState(false);
     // Ensure stale title/indicators are cleared on failure
     try { updateMetaUI(lastData[currentSymbol] || {}, currentSymbol); } catch(_) {}
