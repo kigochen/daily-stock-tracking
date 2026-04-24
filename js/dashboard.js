@@ -364,9 +364,9 @@ function renderCharts(ohlcv) {
   console.log('[QuantBoard] renderCharts === DIAGNOSTIC START ===');
   console.log('[QuantBoard] ohlcv sample:', JSON.stringify(ohlcv[0]));
   console.log('[QuantBoard] mainChart exists:', !!mainChart);
-  if (mainChart) {
-    console.log('[QuantBoard] mainChart.width():', mainChart.width());
-    console.log('[QuantBoard] mainChart.height():', mainChart.height());
+  if (mainChart && typeof mainChart === 'object') {
+    console.log('[QuantBoard] mainChart.width:', mainChart.width);
+    console.log('[QuantBoard] mainChart.height:', mainChart.height);
     const ts = mainChart.timeScale();
     const visRange = ts.getVisibleRange?.();
     console.log('[QuantBoard] visibleRange:', visRange ? JSON.stringify(visRange) : 'N/A');
