@@ -93,12 +93,12 @@ function initCharts() {
       crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
       timeScale: { borderColor: C.grid, timeVisible: true, secondsVisible: false },
       rightPriceScale: { borderColor: C.grid },
-      width: containerWidth,   // ← Fix 7: explicit width
-      height: 360,             // ← Fix 7: explicit height
-      autoSize: false,         // ← Fix 7: disable autoSize
+      width: containerWidth,
+      height: 360,
+      autoSize: true,
+      handleScroll: { horzTouchDrag: true, mouseWheel: true, pressedMouseMove: true },
+      handleScale: { mouseWheel: true, pinch: true },
     });
-    // Fix 7: immediately resize after creation
-    mainChart.resize(containerWidth, 360);
     console.log('[QuantBoard] mainChart created:', mainChart ? 'success' : 'NULL');
 
     // Candlestick series — Fix 6: enhanced try-catch with diagnostics
@@ -128,6 +128,7 @@ function initCharts() {
       timeScale: { visible: false },
       rightPriceScale: { borderColor: C.grid },
       height: 90,
+      autoSize: true,
     });
     console.log('[QuantBoard] volumeChart created');
 
@@ -138,6 +139,7 @@ function initCharts() {
       timeScale: { visible: false },
       rightPriceScale: { borderColor: C.grid },
       height: 90,
+      autoSize: true,
     });
     console.log('[QuantBoard] kdChart created');
 
@@ -148,6 +150,7 @@ function initCharts() {
       timeScale: { visible: false },
       rightPriceScale: { borderColor: C.grid },
       height: 90,
+      autoSize: true,
     });
     console.log('[QuantBoard] rsiChart created');
 
@@ -158,6 +161,7 @@ function initCharts() {
       timeScale: { visible: false },
       rightPriceScale: { borderColor: C.grid },
       height: 90,
+      autoSize: true,
     });
     console.log('[QuantBoard] macdChart created');
 
@@ -169,6 +173,21 @@ function initCharts() {
         ch.timeScale().setVisibleLogicalRange(range);
       });
     });
+
+    // Mobile resize handler
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const w = container.clientWidth || 800;
+        mainChart.resize(w, 360);
+        volumeChart.resize(w, 90);
+        kdChart.resize(w, 90);
+        rsiChart.resize(w, 90);
+        macdChart.resize(w, 90);
+      }, 200);
+    });
+
     console.log('[QuantBoard] initCharts completed successfully');
   } catch(err) {
     console.error('[QuantBoard] initCharts ERROR:', err.message, err.stack);

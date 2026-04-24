@@ -287,6 +287,16 @@ body {
   overflow: hidden;
 }
 
+/* Mobile responsive */
+@media (max-width: 640px) {
+  #mainChart {
+    height: calc(100vw * 0.75) !important;
+  }
+  .sub-chart {
+    height: 70px !important;
+  }
+}
+
 .sub-chart {
   width: 100%;
   height: 90px;
