@@ -45,12 +45,21 @@ const C = {
 // ─── Entry Point ───────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    console.log('[QuantBoard] DOM loaded, initializing charts...');
-    initCharts();
-    bindEvents();
-    // Ensure chart series are fully bound before loading data
+    console.log('[QuantBoard] DOM loaded, starting init...');
+
+    // Wait for initCharts RAF chain to complete before loading data.
+    // Double-RAF ensures the outer RAF schedules the inner one, then we wait
+    // for the inner RAF callback to finish (covers all platforms including mobile).
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => {
+      initCharts();
+      setTimeout(resolve, 50);
+    })));
+
+    // Extra safety垫: ensure sub-chart RAFs also settle
     await new Promise(resolve => setTimeout(resolve, 100));
-    console.log('[QuantBoard] initCharts done, candleSeries:', typeof candleSeries, 'mainChart:', typeof mainChart);
+
+    bindEvents();
+    console.log('[QuantBoard] Charts ready, candleSeries:', typeof candleSeries, 'mainChart:', typeof mainChart);
     await loadSymbol(currentSymbol);
     setInterval(() => loadSymbol(currentSymbol), REFRESH_MS);
   } catch(err) {
