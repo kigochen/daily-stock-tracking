@@ -143,11 +143,13 @@ function initCharts() {
 async function loadSymbol(symbol) {
   currentSymbol = symbol;
   showLoadingState(true);
+  console.log('[QuantBoard] loadSymbol start:', symbol);
   try {
     const [ohlcvRes, metaRes] = await Promise.all([
       fetch(`${DATA_DIR}${symbol}_daily.json?t=${Date.now()}`),
       fetch(`${DATA_DIR}stock_data.json?t=${Date.now()}`),
     ]);
+    console.log('[QuantBoard] fetch responses:', symbol, 'ohlcvRes.status:', ohlcvRes.status, 'metaRes.status:', metaRes.status);
     if (!ohlcvRes.ok || !metaRes.ok) throw new Error('Fetch failed');
 
     const ohlcv = await ohlcvRes.json();
@@ -254,6 +256,7 @@ function computeMACD(data) {
 
 // ─── Render All Charts ──────────────────────────────────────
 function renderCharts(ohlcv) {
+  console.log('[QuantBoard] renderCharts called, ohlcv.length:', ohlcv?.length);
   if (!ohlcv || ohlcv.length < 5) return;
 
   // ── Main chart: Candlestick + MAs ──
