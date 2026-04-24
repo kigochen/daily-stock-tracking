@@ -344,6 +344,7 @@ function renderCharts(ohlcv) {
     color: r.close >= r.open ? C.up : C.down,
   })));
   volumeChart.timeScale().fitContent();
+  volumeChart.resize(volumeChart.width(), volumeChart.height());
 
   // ── KD chart ──
   if (kSeries) { kdChart.removeSeries(kSeries); kSeries = null; }
@@ -354,6 +355,7 @@ function renderCharts(ohlcv) {
   kSeries.setData(kdData.map(r => ({ time: r.time, value: r.k })));
   dSeries.setData(kdData.map(r => ({ time: r.time, value: r.d })));
   kdChart.timeScale().fitContent();
+  kdChart.resize(kdChart.width(), kdChart.height());
 
   // ── RSI chart ──
   if (rsiSeries) { rsiChart.removeSeries(rsiSeries); rsiSeries = null; }
@@ -366,6 +368,7 @@ function renderCharts(ohlcv) {
   });
   rsiSeries.setData(computeRSI(ohlcv));
   rsiChart.timeScale().fitContent();
+  rsiChart.resize(rsiChart.width(), rsiChart.height());
 
   // ── MACD chart ──
   if (histSeries) { macdChart.removeSeries(histSeries); histSeries = null; }
@@ -379,6 +382,7 @@ function renderCharts(ohlcv) {
   sigSeries = macdChart.addSeries(LightweightCharts.LineSeries, { color: C.down, lineWidth: 1 });
   sigSeries.setData(macdData.map(r => ({ time: r.time, value: r.signal })));
   macdChart.timeScale().fitContent();
+  macdChart.resize(macdChart.width(), macdChart.height());
 }
 
 // ─── Update Metadata UI ────────────────────────────────────
