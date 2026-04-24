@@ -44,9 +44,14 @@ function collectConsoleErrors(page, arr) {
 // TC-001: K-line renders on desktop
 // ════════════════════════════════════════════════════════════════════════════
 test('TC-001 K-line renders on desktop', async ({ page }) => {
-  await page.goto('/');
+  await page.goto(page.url()); // Ensure we're on the right page
+  // Navigate to baseURL directly using full path
+  await page.goto('https://kigochen.github.io/daily-stock-tracking/');
   await waitForRAF(page);
-  await page.waitForTimeout(300);
+  await page.waitForTimeout(500);
+
+  console.log('Actual URL:', page.url());
+  console.log('Page title:', await page.title());
 
   const canvas = page.locator('#mainChart canvas');
   await expect(canvas).toBeVisible();
