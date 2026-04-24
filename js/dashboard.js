@@ -225,7 +225,8 @@ function initSeriesAndLoadData(containerWidth, containerHeight) {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
         const w = document.getElementById('mainChart').clientWidth || 800;
-        mainChart.resize(w, containerHeight);
+        const h = document.getElementById('mainChart').clientHeight || 360;
+        mainChart.resize(w, h);
         volumeChart.resize(w, 90);
         kdChart.resize(w, 90);
         rsiChart.resize(w, 90);
@@ -257,7 +258,7 @@ async function loadSymbol(symbol) {
     console.log('[QuantBoard] JSON parsed, ohlcv rows:', ohlcv.length);
     console.log('[QuantBoard] loadSymbol — candleSeries after fetch:', typeof candleSeries, 'value:', candleSeries);
 
-    // Progressive: show last 30 immediately
+    // Progressive: show last 30 immediately (intentional double-call; subsequent full render replaces it)
     const recent30 = ohlcv.slice(-30);
     console.log('[QuantBoard] rendering recent30, ohlcv.length:', recent30.length);
     renderCharts(recent30);
@@ -415,8 +416,7 @@ function renderCharts(ohlcv) {
   ma20Series.setData(ma20Data);
   ma60Series.setData(ma60Data);
   mainChart.timeScale().fitContent();
-  // Force resize to ensure canvas recalculates layout
-  mainChart.resize(mainChart.width(), mainChart.height());
+  // Note: autoSize:true handles resize automatically — manual resize call removed (M1 fix)
 
   // ── Volume chart ──
 
