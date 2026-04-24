@@ -102,7 +102,6 @@ function initCharts() {
     console.log('[QuantBoard] mainChart created:', mainChart ? 'success' : 'NULL');
 
     // Candlestick series — Fix 6: enhanced try-catch with diagnostics
-    let candleSeries = null;
     try {
       console.log('[QuantBoard] Attempting to add CandlestickSeries...');
       candleSeries = mainChart.addSeries(LightweightCharts.CandlestickSeries, {
