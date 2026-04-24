@@ -283,10 +283,47 @@ function computeMACD(data) {
 // ─── Render All Charts ──────────────────────────────────────
 function renderCharts(ohlcv) {
   console.log('[QuantBoard] renderCharts called, ohlcv.length:', ohlcv?.length);
-  if (!ohlcv || ohlcv.length < 5) return;
+  if (!ohlcv || ohlcv.length < 5) {
+    console.warn('[QuantBoard] renderCharts skipped: insufficient data');
+    return;
+  }
+
+  // ── Validate + coerce data types (Lightweight Charts v5 requires number primitives) ──
+  const validated = ohlcv.map((row, i) => {
+    const time  = typeof row.time  === 'number' ? row.time  : Number(row.time);
+    const open  = typeof row.open  === 'number' ? row.open  : parseFloat(row.open);
+    const high  = typeof row.high  === 'number' ? row.high  : parseFloat(row.high);
+    const low   = typeof row.low   === 'number' ? row.low   : parseFloat(row.low);
+    const close = typeof row.close === 'number' ? row.close : parseFloat(row.close);
+    return { time, open, high, low, close };
+  });
+  console.log('[QuantBoard] validated[0]:', JSON.stringify(validated[0]));
 
   // ── Main chart: Candlestick + MAs ──
-  candleSeries.setData(ohlcv);
+  if (!candleSeries) {
+    console.error('[QuantBoard] candleSeries is NULL — cannot setData');
+    return;
+  }
+  console.log('[QuantBoard] candleSeries.setData() called, rows:', validated.length);
+  try {
+    candleSeries.setData(validated);
+    console.log('[QuantBoard] candleSeries.setData completed, data().length:', candleSeries.data().length);
+  } catch(e) {
+    console.error('[QuantBoard] candleSeries.setData ERROR:', e.message, e.stack);
+  }
+
+  const ma5Data  = computeMA(validated, 5);
+  const ma20Data = computeMA(validated, 20);
+  const ma60Data = computeMA(validated, 60);
+
+  ma5Series.setData(ma5Data);
+  ma20Series.setData(ma20Data);
+  ma60Series.setData(ma60Data);
+  mainChart.timeScale().fitContent();
+  // Force resize to ensure canvas recalculates layout
+  mainChart.resize(mainChart.width(), mainChart.height());
+
+  // ── Volume chart ──
 
   const ma5Data  = computeMA(ohlcv, 5);
   const ma20Data = computeMA(ohlcv, 20);
