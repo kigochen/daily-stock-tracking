@@ -21,12 +21,14 @@ let macdChart = null;
 // Series handles
 let candleSeries = null;
 let ma5Series = null, ma20Series = null, ma60Series = null;
+let ma120Series = null, ma240Series = null;
 let volSeries = null;
 let kSeries = null, dSeries = null;
 let rsiSeries = null;
 let histSeries = null, difSeries = null, sigSeries = null;
 
 let lastData = null;
+let lastOhlcv = null;
 let currentSymbol = 'twii';
 
 // ─── Color palette ─────────────────────────────────────────
@@ -36,6 +38,8 @@ const C = {
   ma5:      '#ffa501',
   ma20:     '#58a6ff',
   ma60:     '#bc8cff',
+  ma120:    '#FFD700',
+  ma240:    '#FF69B4',
   grid:     '#30363d',
   text:     '#8b949e',
   bg:       '#0d1117',
@@ -152,6 +156,8 @@ function initSeriesAndLoadData(containerWidth, containerHeight) {
   ma5Series  = mainChart.addLineSeries({ color: C.ma5,  lineWidth: 1, title: 'MA5' });
   ma20Series = mainChart.addLineSeries({ color: C.ma20, lineWidth: 1, title: 'MA20' });
   ma60Series = mainChart.addLineSeries({ color: C.ma60, lineWidth: 1, title: 'MA60' });
+  ma120Series = mainChart.addLineSeries({ color: C.ma120, lineWidth: 1, title: 'MA120' });
+  ma240Series = mainChart.addLineSeries({ color: C.ma240, lineWidth: 1, title: 'MA240' });
   console.log('[QuantBoard] MA series created');
 
   // ⚡ Volume chart — use RAF to ensure DOM dimensions are correct
@@ -262,6 +268,7 @@ async function loadSymbol(symbol) {
 
     const ohlcv = await ohlcvRes.json();
     lastData = await metaRes.json();
+    lastOhlcv = ohlcv;
     console.log('[QuantBoard] JSON parsed, ohlcv rows:', ohlcv.length);
     console.log('[QuantBoard] loadSymbol — candleSeries after fetch:', typeof candleSeries, 'value:', candleSeries);
 
@@ -421,10 +428,14 @@ function renderCharts(ohlcv) {
   const ma5Data  = computeMA(validated, 5);
   const ma20Data = computeMA(validated, 20);
   const ma60Data = computeMA(validated, 60);
+  const ma120Data = computeMA(validated, 120);
+  const ma240Data = computeMA(validated, 240);
 
   ma5Series.setData(ma5Data);
   ma20Series.setData(ma20Data);
   ma60Series.setData(ma60Data);
+  ma120Series.setData(ma120Data);
+  ma240Series.setData(ma240Data);
   mainChart.timeScale().fitContent();
   // Note: autoSize:true handles resize automatically — manual resize call removed (M1 fix)
 
@@ -487,12 +498,20 @@ function updateMetaUI(info, symbol) {
   if (titleEl) titleEl.textContent = label;
   if (!info) {
     // Clear indicators when data is missing
-    ['chartPrice','chartChange','indMA5','indMA20','indMA60','indRSI','indK','indD'].forEach(id => {
+    ['chartPrice','chartChange','indMA5','indMA20','indMA60','indMA120','indMA240','indRSI','indK','indD','indMACD'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.textContent = '--';
     });
     return;
   }
+  // Debug: log raw info to diagnose -- display
+  console.log('[QuantBoard] updateMetaUI info for', symbol, ':', JSON.stringify({
+    price: info.price, change: info.change,
+    ma5: info.ma5, ma20: info.ma20, ma60: info.ma60,
+    rsi6: info.rsi6,
+    kd: info.kd,
+    macd: info.macd,
+  }));
   document.getElementById('chartPrice').textContent =
     info.price != null ? info.price.toLocaleString('en-US', {maximumFractionDigits: 2}) : '--';
 
@@ -510,10 +529,21 @@ function updateMetaUI(info, symbol) {
   set('indMA5',  info.ma5);
   set('indMA20', info.ma20);
   set('indMA60', info.ma60);
+  // MA120/MA240 computed from ohlcv (not stored in stock_data.json)
+  const latestMA = (ohlcvData, period) => {
+    if (!ohlcvData || ohlcvData.length < period) return null;
+    const slice = ohlcvData.slice(-period);
+    return slice.reduce((s, r) => s + r.close, 0) / period;
+  };
+  set('indMA120', lastOhlcv ? latestMA(lastOhlcv, 120) : null);
+  set('indMA240', lastOhlcv ? latestMA(lastOhlcv, 240) : null);
   set('indRSI',  info.rsi6);
   if (info.kd) {
     set('indK', info.kd.k);
     set('indD', info.kd.d);
+  }
+  if (info.macd) {
+    set('indMACD', info.macd.dif);
   }
 
   const badge = document.getElementById('chartSignal');
