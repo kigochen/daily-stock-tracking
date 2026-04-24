@@ -92,7 +92,7 @@ test('TC-002 K-line renders on mobile (iPhone)', async ({ page }) => {
 // ════════════════════════════════════════════════════════════════════════════
 test('TC-003 K-line renders on Android viewport', async ({ page }) => {
   await page.setViewportSize({ width: 414, height: 896 });
-  await page.goto('/');
+  await page.goto('https://kigochen.github.io/daily-stock-tracking/');
   await waitForRAF(page);
   await page.waitForTimeout(300);
 
