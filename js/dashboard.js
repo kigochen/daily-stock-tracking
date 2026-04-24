@@ -265,20 +265,23 @@ async function loadSymbol(symbol) {
     console.log('[QuantBoard] JSON parsed, ohlcv rows:', ohlcv.length);
     console.log('[QuantBoard] loadSymbol — candleSeries after fetch:', typeof candleSeries, 'value:', candleSeries);
 
-    // Progressive: show last 30 immediately (intentional double-call; subsequent full render replaces it)
-    const recent30 = ohlcv.slice(-30);
-    console.log('[QuantBoard] rendering recent30, ohlcv.length:', recent30.length);
-    renderCharts(recent30);
-
-    // Then render full dataset
+    // Render full dataset
     console.log('[QuantBoard] rendering full dataset, ohlcv.length:', ohlcv.length);
     renderCharts(ohlcv);
-    updateMetaUI(lastData[symbol], symbol);
+
+    // Update meta UI — wrapped in try/catch so stale title/indicators never persist
+    try {
+      updateMetaUI(lastData[symbol], symbol);
+    } catch(e) {
+      console.error('[QuantBoard] updateMetaUI failed:', e.message);
+    }
     updateSummary(lastData);
     showLoadingState(false);
   } catch (err) {
-    console.error('❌ loadSymbol failed:', err);
+    console.error('❌ loadSymbol failed:', err.message, err.stack);
     showLoadingState(false);
+    // Ensure stale title/indicators are cleared on failure
+    try { updateMetaUI(lastData[currentSymbol] || {}, currentSymbol); } catch(_) {}
   }
 }
 
@@ -478,8 +481,18 @@ function renderCharts(ohlcv) {
 
 // ─── Update Metadata UI ────────────────────────────────────
 function updateMetaUI(info, symbol) {
-  if (!info) return;
-  document.getElementById('chartTitle').textContent = SYMBOL_LABELS[symbol] || symbol;
+  // Always update title — even if info is empty, clear stale data
+  const label = SYMBOL_LABELS[symbol] || symbol || 'Unknown';
+  const titleEl = document.getElementById('chartTitle');
+  if (titleEl) titleEl.textContent = label;
+  if (!info) {
+    // Clear indicators when data is missing
+    ['chartPrice','chartChange','indMA5','indMA20','indMA60','indRSI','indK','indD'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = '--';
+    });
+    return;
+  }
   document.getElementById('chartPrice').textContent =
     info.price != null ? info.price.toLocaleString('en-US', {maximumFractionDigits: 2}) : '--';
 
