@@ -79,26 +79,42 @@ function bindEvents() {
 
 // ─── Chart Initialization ──────────────────────────────────
 function initCharts() {
+  console.log('[QuantBoard] initCharts called');
   const bg = C.bg;
 
   try {
     // Main chart: Candlestick + MA lines
-    mainChart = LightweightCharts.createChart(document.getElementById('mainChart'), {
+    const container = document.getElementById('mainChart');
+    const containerWidth = container.clientWidth || 800;
+
+    mainChart = LightweightCharts.createChart(container, {
       layout: { background: { color: bg }, textColor: C.text },
       grid: { vertLines: { color: C.grid }, horzLines: { color: C.grid } },
       crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
       timeScale: { borderColor: C.grid, timeVisible: true, secondsVisible: false },
       rightPriceScale: { borderColor: C.grid },
-      height: 360,
+      width: containerWidth,   // ← Fix 7: explicit width
+      height: 360,             // ← Fix 7: explicit height
+      autoSize: false,         // ← Fix 7: disable autoSize
     });
+    // Fix 7: immediately resize after creation
+    mainChart.resize(containerWidth, 360);
     console.log('[QuantBoard] mainChart created:', mainChart ? 'success' : 'NULL');
 
-    // Candlestick series
-    candleSeries = mainChart.addSeries(LightweightCharts.CandlestickSeries, {
-      upColor: C.up, downColor: C.down, borderUpColor: C.up, borderDownColor: C.down,
-      wickUpColor: C.up, wickDownColor: C.down,
-    });
-    console.log('[QuantBoard] candleSeries created:', candleSeries ? 'success' : 'NULL');
+    // Candlestick series — Fix 6: enhanced try-catch with diagnostics
+    let candleSeries = null;
+    try {
+      console.log('[QuantBoard] Attempting to add CandlestickSeries...');
+      candleSeries = mainChart.addSeries(LightweightCharts.CandlestickSeries, {
+        upColor: C.up, downColor: C.down,
+        borderUpColor: C.up, borderDownColor: C.down,
+        wickUpColor: C.up, wickDownColor: C.down,
+      });
+      console.log('[QuantBoard] ✅ candleSeries created:', typeof candleSeries);
+      console.log('[QuantBoard] candleSeries.data() length:', candleSeries ? candleSeries.data().length : 'N/A');
+    } catch(e) {
+      console.error('[QuantBoard] ❌ CandlestickSeries creation FAILED:', e.message);
+    }
 
     // MA line series (persistent handles)
     ma5Series  = mainChart.addSeries(LightweightCharts.LineSeries, { color: C.ma5,  lineWidth: 1, title: 'MA5' });
@@ -282,6 +298,23 @@ function computeMACD(data) {
 
 // ─── Render All Charts ──────────────────────────────────────
 function renderCharts(ohlcv) {
+  // Fix 8: diagnostic header
+  console.log('[QuantBoard] renderCharts === DIAGNOSTIC START ===');
+  console.log('[QuantBoard] ohlcv sample:', JSON.stringify(ohlcv[0]));
+  console.log('[QuantBoard] mainChart exists:', !!mainChart);
+  if (mainChart) {
+    console.log('[QuantBoard] mainChart.width():', mainChart.width());
+    console.log('[QuantBoard] mainChart.height():', mainChart.height());
+    const ts = mainChart.timeScale();
+    const visRange = ts.getVisibleRange?.();
+    console.log('[QuantBoard] visibleRange:', visRange ? JSON.stringify(visRange) : 'N/A');
+  }
+  console.log('[QuantBoard] candleSeries exists:', !!candleSeries);
+  if (candleSeries && ohlcv.length > 0) {
+    console.log('[QuantBoard] first candle time:', ohlcv[0].time,
+      '→ as date:', new Date(ohlcv[0].time * (ohlcv[0].time > 1e10 ? 1 : 1000)));
+  }
+
   console.log('[QuantBoard] renderCharts called, ohlcv.length:', ohlcv?.length);
   if (!ohlcv || ohlcv.length < 5) {
     console.warn('[QuantBoard] renderCharts skipped: insufficient data');
@@ -324,15 +357,6 @@ function renderCharts(ohlcv) {
   mainChart.resize(mainChart.width(), mainChart.height());
 
   // ── Volume chart ──
-
-  const ma5Data  = computeMA(ohlcv, 5);
-  const ma20Data = computeMA(ohlcv, 20);
-  const ma60Data = computeMA(ohlcv, 60);
-
-  ma5Series.setData(ma5Data);
-  ma20Series.setData(ma20Data);
-  ma60Series.setData(ma60Data);
-  mainChart.timeScale().fitContent();
 
   // ── Volume chart ──
   if (volSeries) { volumeChart.removeSeries(volSeries); volSeries = null; }
