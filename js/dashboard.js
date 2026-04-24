@@ -97,8 +97,9 @@ function initCharts() {
 
     // ⚡ Mobile fix: wait for CSS media query to apply before measuring
     requestAnimationFrame(() => {
-      const containerWidth  = container.clientWidth || 800;
-      const containerHeight = container.clientHeight || 360;
+      // Fix Android viewport: fallback when CSS height hasn't applied yet
+      const containerWidth  = container.clientWidth  || Math.min(window.innerWidth,  800);
+      const containerHeight = container.clientHeight || Math.min(window.innerHeight * 0.45, 400);
 
       mainChart = LightweightCharts.createChart(container, {
         layout: { background: { color: bg }, textColor: C.text },
@@ -224,8 +225,10 @@ function initSeriesAndLoadData(containerWidth, containerHeight) {
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
-        const w = document.getElementById('mainChart').clientWidth || 800;
-        const h = document.getElementById('mainChart').clientHeight || 360;
+        const mainEl = document.getElementById('mainChart');
+        // Fix Android viewport: fallback to CSS-pixel height when clientHeight is 0
+        const w = mainEl.clientWidth  || Math.min(window.innerWidth,  800);
+        const h = mainEl.clientHeight || Math.min(window.innerHeight * 0.45, 400);
         mainChart.resize(w, h);
         volumeChart.resize(w, 90);
         kdChart.resize(w, 90);
