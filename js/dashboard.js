@@ -282,6 +282,7 @@ async function loadSymbol(symbol) {
     lastData = await metaRes.json();
     lastOhlcv = ohlcv;
     console.log('[QuantBoard] JSON parsed, ohlcv rows:', ohlcv.length);
+    console.log('[QuantBoard] loadSymbol SUCCESS for', symbol, 'lastData[symbol]:', JSON.stringify(lastData[symbol]));
     console.log('[QuantBoard] loadSymbol — candleSeries after fetch:', typeof candleSeries, 'value:', candleSeries);
 
     // Double-check symbol hasn't changed while parsing
@@ -296,7 +297,9 @@ async function loadSymbol(symbol) {
 
     // Update meta UI — wrapped in try/catch so stale title/indicators never persist
     try {
-      updateMetaUI(lastData[symbol], symbol);
+      const infoForSymbol = lastData[symbol];
+      console.log('[QuantBoard] about to call updateMetaUI, infoForSymbol:', JSON.stringify(infoForSymbol));
+      updateMetaUI(infoForSymbol, symbol);
     } catch(e) {
       console.error('[QuantBoard] updateMetaUI failed:', e.message);
     }
