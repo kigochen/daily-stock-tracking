@@ -44,14 +44,18 @@ const C = {
 
 // ─── Entry Point ───────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('[QuantBoard] DOM loaded, initializing charts...');
-  initCharts();
-  bindEvents();
-  // Ensure chart series are fully bound before loading data
-  await new Promise(resolve => setTimeout(resolve, 100));
-  console.log('[QuantBoard] initCharts done, candleSeries:', typeof candleSeries, 'mainChart:', typeof mainChart);
-  await loadSymbol(currentSymbol);
-  setInterval(() => loadSymbol(currentSymbol), REFRESH_MS);
+  try {
+    console.log('[QuantBoard] DOM loaded, initializing charts...');
+    initCharts();
+    bindEvents();
+    // Ensure chart series are fully bound before loading data
+    await new Promise(resolve => setTimeout(resolve, 100));
+    console.log('[QuantBoard] initCharts done, candleSeries:', typeof candleSeries, 'mainChart:', typeof mainChart);
+    await loadSymbol(currentSymbol);
+    setInterval(() => loadSymbol(currentSymbol), REFRESH_MS);
+  } catch(err) {
+    console.error('[QuantBoard] FATAL:', err.message, err.stack);
+  }
 });
 
 function bindEvents() {
@@ -77,70 +81,82 @@ function bindEvents() {
 function initCharts() {
   const bg = C.bg;
 
-  // Main chart: Candlestick + MA lines
-  mainChart = LightweightCharts.createChart(document.getElementById('mainChart'), {
-    layout: { background: { color: bg }, textColor: C.text },
-    grid: { vertLines: { color: C.grid }, horzLines: { color: C.grid } },
-    crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
-    timeScale: { borderColor: C.grid, timeVisible: true, secondsVisible: false },
-    rightPriceScale: { borderColor: C.grid },
-    height: 360,
-  });
-
-  // Candlestick series
-  candleSeries = mainChart.addSeries(LightweightCharts.CandlestickSeries, {
-    upColor: C.up, downColor: C.down, borderUpColor: C.up, borderDownColor: C.down,
-    wickUpColor: C.up, wickDownColor: C.down,
-  });
-
-  // MA line series (persistent handles)
-  ma5Series  = mainChart.addSeries(LightweightCharts.LineSeries, { color: C.ma5,  lineWidth: 1, title: 'MA5' });
-  ma20Series = mainChart.addSeries(LightweightCharts.LineSeries, { color: C.ma20, lineWidth: 1, title: 'MA20' });
-  ma60Series = mainChart.addSeries(LightweightCharts.LineSeries, { color: C.ma60, lineWidth: 1, title: 'MA60' });
-
-  // Volume chart
-  volumeChart = LightweightCharts.createChart(document.getElementById('volumeChart'), {
-    layout: { background: { color: bg }, textColor: C.text },
-    grid: { vertLines: { visible: false }, horzLines: { color: C.grid } },
-    timeScale: { visible: false },
-    rightPriceScale: { borderColor: C.grid },
-    height: 90,
-  });
-
-  // KD chart
-  kdChart = LightweightCharts.createChart(document.getElementById('kdChart'), {
-    layout: { background: { color: bg }, textColor: C.text },
-    grid: { vertLines: { visible: false }, horzLines: { color: C.grid } },
-    timeScale: { visible: false },
-    rightPriceScale: { borderColor: C.grid },
-    height: 90,
-  });
-
-  // RSI chart
-  rsiChart = LightweightCharts.createChart(document.getElementById('rsiChart'), {
-    layout: { background: { color: bg }, textColor: C.text },
-    grid: { vertLines: { visible: false }, horzLines: { color: C.grid } },
-    timeScale: { visible: false },
-    rightPriceScale: { borderColor: C.grid },
-    height: 90,
-  });
-
-  // MACD chart
-  macdChart = LightweightCharts.createChart(document.getElementById('macdChart'), {
-    layout: { background: { color: bg }, textColor: C.text },
-    grid: { vertLines: { visible: false }, horzLines: { color: C.grid } },
-    timeScale: { visible: false },
-    rightPriceScale: { borderColor: C.grid },
-    height: 90,
-  });
-
-  // Sync time scales across all charts
-  mainChart.timeScale().subscribe('visibleLogicalRangeChange', () => {
-    const range = mainChart.timeScale().getVisibleLogicalRange();
-    [volumeChart, kdChart, rsiChart, macdChart].forEach(ch => {
-      if (range) ch.timeScale().setVisibleLogicalRange(range);
+  try {
+    // Main chart: Candlestick + MA lines
+    mainChart = LightweightCharts.createChart(document.getElementById('mainChart'), {
+      layout: { background: { color: bg }, textColor: C.text },
+      grid: { vertLines: { color: C.grid }, horzLines: { color: C.grid } },
+      crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+      timeScale: { borderColor: C.grid, timeVisible: true, secondsVisible: false },
+      rightPriceScale: { borderColor: C.grid },
+      height: 360,
     });
-  });
+    console.log('[QuantBoard] mainChart created:', mainChart ? 'success' : 'NULL');
+
+    // Candlestick series
+    candleSeries = mainChart.addSeries(LightweightCharts.CandlestickSeries, {
+      upColor: C.up, downColor: C.down, borderUpColor: C.up, borderDownColor: C.down,
+      wickUpColor: C.up, wickDownColor: C.down,
+    });
+    console.log('[QuantBoard] candleSeries created:', candleSeries ? 'success' : 'NULL');
+
+    // MA line series (persistent handles)
+    ma5Series  = mainChart.addSeries(LightweightCharts.LineSeries, { color: C.ma5,  lineWidth: 1, title: 'MA5' });
+    ma20Series = mainChart.addSeries(LightweightCharts.LineSeries, { color: C.ma20, lineWidth: 1, title: 'MA20' });
+    ma60Series = mainChart.addSeries(LightweightCharts.LineSeries, { color: C.ma60, lineWidth: 1, title: 'MA60' });
+    console.log('[QuantBoard] MA series created');
+
+    // Volume chart
+    volumeChart = LightweightCharts.createChart(document.getElementById('volumeChart'), {
+      layout: { background: { color: bg }, textColor: C.text },
+      grid: { vertLines: { visible: false }, horzLines: { color: C.grid } },
+      timeScale: { visible: false },
+      rightPriceScale: { borderColor: C.grid },
+      height: 90,
+    });
+    console.log('[QuantBoard] volumeChart created');
+
+    // KD chart
+    kdChart = LightweightCharts.createChart(document.getElementById('kdChart'), {
+      layout: { background: { color: bg }, textColor: C.text },
+      grid: { vertLines: { visible: false }, horzLines: { color: C.grid } },
+      timeScale: { visible: false },
+      rightPriceScale: { borderColor: C.grid },
+      height: 90,
+    });
+    console.log('[QuantBoard] kdChart created');
+
+    // RSI chart
+    rsiChart = LightweightCharts.createChart(document.getElementById('rsiChart'), {
+      layout: { background: { color: bg }, textColor: C.text },
+      grid: { vertLines: { visible: false }, horzLines: { color: C.grid } },
+      timeScale: { visible: false },
+      rightPriceScale: { borderColor: C.grid },
+      height: 90,
+    });
+    console.log('[QuantBoard] rsiChart created');
+
+    // MACD chart
+    macdChart = LightweightCharts.createChart(document.getElementById('macdChart'), {
+      layout: { background: { color: bg }, textColor: C.text },
+      grid: { vertLines: { visible: false }, horzLines: { color: C.grid } },
+      timeScale: { visible: false },
+      rightPriceScale: { borderColor: C.grid },
+      height: 90,
+    });
+    console.log('[QuantBoard] macdChart created');
+
+    // Sync time scales across all charts
+    mainChart.timeScale().subscribe('visibleLogicalRangeChange', () => {
+      const range = mainChart.timeScale().getVisibleLogicalRange();
+      [volumeChart, kdChart, rsiChart, macdChart].forEach(ch => {
+        if (range) ch.timeScale().setVisibleLogicalRange(range);
+      });
+    });
+    console.log('[QuantBoard] initCharts completed successfully');
+  } catch(err) {
+    console.error('[QuantBoard] initCharts ERROR:', err.message, err.stack);
+  }
 }
 
 // ─── Load Symbol (Progressive Loading) ──────────────────────
