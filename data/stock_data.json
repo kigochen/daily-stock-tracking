@@ -1,607 +1,607 @@
 {
   "twii": {
-    "price": 41138.85,
-    "prev_close": 40769.29,
-    "change": 0.91,
+    "price": 41933.78,
+    "prev_close": 41138.85,
+    "change": 1.93,
     "volume": 0,
-    "ma5": 40168.68,
-    "ma20": 37826.15,
-    "ma60": 34745.12,
+    "ma5": 40694.74,
+    "ma20": 38184.77,
+    "ma60": 34897.29,
     "kd": {
-      "k": 90.1,
-      "d": 95.2,
-      "j": 79.9
+      "k": 94.8,
+      "d": 93.9,
+      "j": 96.6
     },
-    "rsi6": 84.6,
+    "rsi6": 88.2,
     "macd": {
-      "dif": 25391.32,
-      "signal": 147655.63,
-      "hist": 173046.95
+      "dif": 27744.68,
+      "signal": 154591.8,
+      "hist": 182336.48
     },
-    "atr": 869.1927,
-    "vwap": 38498.7354,
+    "atr": 879.7651,
+    "vwap": 38881.7846,
     "bb": {
-      "upper": 41676.3573,
-      "middle": 37826.1486,
-      "lower": 33975.94
+      "upper": 42160.3995,
+      "middle": 38184.7688,
+      "lower": 34209.138
     },
-    "bias": 8.76,
+    "bias": 9.82,
     "macd_signal": "bullish",
-    "kdj_j": 79.9,
+    "kdj_j": 96.6,
     "signal": "neutral",
     "ok": true
   },
   "txf": {
-    "price": 41138.85,
-    "prev_close": 40769.29,
-    "change": 0.91,
+    "price": 41933.78,
+    "prev_close": 41138.85,
+    "change": 1.93,
     "volume": 0,
-    "ma5": 40168.68,
-    "ma20": 37826.15,
-    "ma60": 34745.12,
+    "ma5": 40694.74,
+    "ma20": 38184.77,
+    "ma60": 34897.29,
     "kd": {
-      "k": 90.1,
-      "d": 95.2,
-      "j": 79.9
+      "k": 94.8,
+      "d": 93.9,
+      "j": 96.6
     },
-    "rsi6": 84.6,
+    "rsi6": 88.2,
     "macd": {
-      "dif": 25391.32,
-      "signal": 147655.63,
-      "hist": 173046.95
+      "dif": 27744.68,
+      "signal": 154591.8,
+      "hist": 182336.48
     },
-    "atr": 869.1927,
-    "vwap": 38498.7354,
+    "atr": 879.7651,
+    "vwap": 38881.7846,
     "bb": {
-      "upper": 41676.3573,
-      "middle": 37826.1486,
-      "lower": 33975.94
+      "upper": 42160.3995,
+      "middle": 38184.7688,
+      "lower": 34209.138
     },
-    "bias": 8.76,
+    "bias": 9.82,
     "macd_signal": "bullish",
-    "kdj_j": 79.9,
+    "kdj_j": 96.6,
     "signal": "neutral",
     "ok": true
   },
   "2330": {
-    "price": 2250.0,
+    "price": 2310.0,
     "prev_close": 2250.0,
-    "change": 0.0,
-    "volume": 34075250,
-    "ma5": 2218.0,
-    "ma20": 2105.25,
-    "ma60": 1935.7,
+    "change": 2.67,
+    "volume": 37506766,
+    "ma5": 2244.0,
+    "ma20": 2123.25,
+    "ma60": 1943.97,
     "kd": {
-      "k": 70.9,
-      "d": 74.8,
-      "j": 63.2
+      "k": 85.4,
+      "d": 76.2,
+      "j": 103.8
     },
-    "rsi6": 65.7,
+    "rsi6": 72.8,
     "macd": {
-      "dif": 1099.61,
-      "signal": 8081.49,
-      "hist": 9181.1
+      "dif": 1226.18,
+      "signal": 8388.03,
+      "hist": 9614.21
     },
-    "atr": 64.016,
-    "vwap": 2165.6921,
+    "atr": 66.2292,
+    "vwap": 2181.2598,
     "bb": {
-      "upper": 2312.4088,
-      "middle": 2105.25,
-      "lower": 1898.0912
+      "upper": 2335.8123,
+      "middle": 2123.25,
+      "lower": 1910.6877
     },
-    "bias": 6.88,
+    "bias": 8.8,
     "macd_signal": "bullish",
-    "kdj_j": 63.2,
-    "signal": "neutral",
+    "kdj_j": 103.8,
+    "signal": "overbought",
     "ok": true
   },
   "spy": {
-    "price": 723.77,
-    "prev_close": 718.01,
-    "change": 0.8,
-    "volume": 36643400,
-    "ma5": 718.53,
-    "ma20": 704.68,
-    "ma60": 681.59,
+    "price": 733.83,
+    "prev_close": 723.77,
+    "change": 1.39,
+    "volume": 53209000,
+    "ma5": 722.98,
+    "ma20": 707.57,
+    "ma60": 682.29,
     "kd": {
-      "k": 94.4,
-      "d": 81.8,
-      "j": 119.7
+      "k": 97.1,
+      "d": 87.1,
+      "j": 117.2
     },
-    "rsi6": 76.5,
+    "rsi6": 84.5,
     "macd": {
-      "dif": 92.93,
-      "signal": 1192.18,
-      "hist": 1285.11
+      "dif": 136.2,
+      "signal": 1226.23,
+      "hist": 1362.43
     },
-    "atr": 7.6824,
-    "vwap": 711.8853,
+    "atr": 7.9065,
+    "vwap": 714.245,
     "bb": {
-      "upper": 732.7565,
-      "middle": 704.6805,
-      "lower": 676.6045
+      "upper": 735.1463,
+      "middle": 707.5715,
+      "lower": 679.9967
     },
-    "bias": 2.71,
+    "bias": 3.71,
     "macd_signal": "bullish",
-    "kdj_j": 119.7,
+    "kdj_j": 117.2,
     "signal": "overbought",
     "ok": true
   },
   "qqq": {
-    "price": 681.61,
-    "prev_close": 672.88,
-    "change": 1.3,
-    "volume": 36623100,
-    "ma5": 671.59,
-    "ma20": 647.07,
-    "ma60": 613.63,
+    "price": 695.77,
+    "prev_close": 681.61,
+    "change": 2.08,
+    "volume": 38454700,
+    "ma5": 678.43,
+    "ma20": 651.55,
+    "ma60": 615.0,
     "kd": {
-      "k": 96.9,
-      "d": 93.1,
-      "j": 104.6
+      "k": 99.6,
+      "d": 94.7,
+      "j": 109.4
     },
-    "rsi6": 83.5,
+    "rsi6": 89.0,
     "macd": {
-      "dif": 229.55,
-      "signal": 1677.4,
-      "hist": 1906.95
+      "dif": 294.09,
+      "signal": 1750.92,
+      "hist": 2045.0
     },
-    "atr": 9.7061,
-    "vwap": 657.6777,
+    "atr": 10.0357,
+    "vwap": 661.6214,
     "bb": {
-      "upper": 691.1246,
-      "middle": 647.066,
-      "lower": 603.0074
+      "upper": 696.264,
+      "middle": 651.55,
+      "lower": 606.836
     },
-    "bias": 5.34,
+    "bias": 6.79,
     "macd_signal": "bullish",
-    "kdj_j": 104.6,
+    "kdj_j": 109.4,
     "signal": "overbought",
     "ok": true
   },
   "vix": {
-    "price": 17.38,
-    "prev_close": 18.29,
-    "change": -4.98,
+    "price": 17.39,
+    "prev_close": 17.38,
+    "change": 0.06,
     "volume": 0,
-    "ma5": 17.67,
-    "ma20": 18.52,
-    "ma60": 21.7,
+    "ma5": 17.39,
+    "ma20": 18.33,
+    "ma60": 21.71,
     "kd": {
-      "k": 18.4,
-      "d": 21.7,
-      "j": 11.6
+      "k": 37.2,
+      "d": 30.6,
+      "j": 50.5
     },
-    "rsi6": 40.8,
+    "rsi6": 40.9,
     "macd": {
-      "dif": 0.0,
-      "signal": -137.6,
-      "hist": -137.6
+      "dif": 2.43,
+      "signal": -136.99,
+      "hist": -134.56
     },
-    "atr": 2.1315,
+    "atr": 2.0707,
     "bb": {
-      "upper": 20.4558,
-      "middle": 18.5175,
-      "lower": 16.5792
+      "upper": 19.9491,
+      "middle": 18.335,
+      "lower": 16.7209
     },
-    "bias": -6.16,
+    "bias": -5.13,
     "macd_signal": "bearish",
-    "kdj_j": 11.6,
+    "kdj_j": 50.5,
     "signal": "neutral",
     "ok": true
   },
   "dxy": {
-    "price": 98.1,
-    "prev_close": 98.48,
-    "change": -0.39,
+    "price": 98.04,
+    "prev_close": 98.02,
+    "change": 0.02,
     "volume": 0,
-    "ma5": 98.27,
-    "ma20": 98.4,
-    "ma60": 98.7,
+    "ma5": 98.24,
+    "ma20": 98.36,
+    "ma60": 98.72,
     "kd": {
-      "k": 23.2,
-      "d": 38.8,
-      "j": -8.0
+      "k": 23.7,
+      "d": 31.1,
+      "j": 8.8
     },
-    "rsi6": 37.6,
+    "rsi6": 36.6,
     "macd": {
-      "dif": -1.1,
-      "signal": -17.27,
-      "hist": -18.37
+      "dif": -2.59,
+      "signal": -18.04,
+      "hist": -20.63
     },
-    "atr": 0.5906,
+    "atr": 0.5766,
     "bb": {
-      "upper": 98.9421,
-      "middle": 98.4028,
-      "lower": 97.8635
+      "upper": 98.8947,
+      "middle": 98.3598,
+      "lower": 97.8248
     },
-    "bias": -0.3,
+    "bias": -0.33,
     "macd_signal": "bearish",
-    "kdj_j": -8.0,
-    "signal": "oversold",
+    "kdj_j": 8.8,
+    "signal": "neutral",
     "ok": true
   },
   "goog": {
-    "price": 384.27,
-    "prev_close": 379.64,
-    "change": 1.22,
-    "volume": 15339100,
-    "ma5": 375.28,
-    "ma20": 342.97,
-    "ma60": 315.85,
+    "price": 395.14,
+    "prev_close": 384.27,
+    "change": 2.83,
+    "volume": 23069200,
+    "ma5": 384.84,
+    "ma20": 346.99,
+    "ma60": 317.03,
     "kd": {
-      "k": 91.5,
-      "d": 94.1,
-      "j": 86.2
+      "k": 98.0,
+      "d": 93.5,
+      "j": 107.0
     },
-    "rsi6": 86.4,
+    "rsi6": 89.8,
     "macd": {
-      "dif": 469.78,
-      "signal": 1386.95,
-      "hist": 1856.73
+      "dif": 496.43,
+      "signal": 1511.06,
+      "hist": 2007.49
     },
-    "atr": 9.5404,
-    "vwap": 355.5779,
+    "atr": 9.724,
+    "vwap": 359.7471,
     "bb": {
-      "upper": 386.9712,
-      "middle": 342.9665,
-      "lower": 298.9618
+      "upper": 394.4927,
+      "middle": 346.9865,
+      "lower": 299.4803
     },
-    "bias": 12.04,
+    "bias": 13.88,
     "macd_signal": "bullish",
-    "kdj_j": 86.2,
-    "signal": "neutral",
+    "kdj_j": 107.0,
+    "signal": "overbought",
     "ok": true
   },
   "mu": {
-    "price": 640.2,
-    "prev_close": 576.45,
-    "change": 11.06,
-    "volume": 62903700,
-    "ma5": 558.9,
-    "ma20": 484.83,
-    "ma60": 428.75,
+    "price": 666.59,
+    "prev_close": 640.2,
+    "change": 4.12,
+    "volume": 55473300,
+    "ma5": 588.52,
+    "ma20": 497.82,
+    "ma60": 433.47,
     "kd": {
-      "k": 93.6,
-      "d": 92.6,
-      "j": 95.5
+      "k": 99.4,
+      "d": 93.6,
+      "j": 111.0
     },
-    "rsi6": 91.6,
+    "rsi6": 93.0,
     "macd": {
-      "dif": 1389.13,
-      "signal": 3097.72,
-      "hist": 4486.85
+      "dif": 1736.25,
+      "signal": 3531.78,
+      "hist": 5268.02
     },
-    "atr": 33.0728,
-    "vwap": 514.4133,
+    "atr": 33.574,
+    "vwap": 531.5717,
     "bb": {
-      "upper": 597.2276,
-      "middle": 484.8315,
-      "lower": 372.4354
+      "upper": 629.5245,
+      "middle": 497.8245,
+      "lower": 366.1246
     },
-    "bias": 32.05,
+    "bias": 33.9,
     "macd_signal": "bullish",
-    "kdj_j": 95.5,
-    "signal": "neutral",
+    "kdj_j": 111.0,
+    "signal": "overbought",
     "ok": true
   },
   "soxx": {
-    "price": 482.73,
-    "prev_close": 462.06,
-    "change": 4.47,
-    "volume": 7106900,
-    "ma5": 464.39,
-    "ma20": 427.12,
-    "ma60": 371.2,
+    "price": 506.87,
+    "prev_close": 482.73,
+    "change": 5.0,
+    "volume": 9656100,
+    "ma5": 475.77,
+    "ma20": 433.95,
+    "ma60": 373.77,
     "kd": {
-      "k": 93.7,
-      "d": 91.7,
-      "j": 97.5
+      "k": 99.9,
+      "d": 92.5,
+      "j": 114.8
     },
-    "rsi6": 80.7,
+    "rsi6": 86.7,
     "macd": {
-      "dif": 310.42,
-      "signal": 2651.36,
-      "hist": 2961.78
+      "dif": 449.5,
+      "signal": 2763.73,
+      "hist": 3213.24
     },
-    "atr": 13.4975,
-    "vwap": 444.378,
+    "atr": 14.2627,
+    "vwap": 451.8713,
     "bb": {
-      "upper": 490.706,
-      "middle": 427.122,
-      "lower": 363.538
+      "upper": 500.9168,
+      "middle": 433.9455,
+      "lower": 366.9742
     },
-    "bias": 13.02,
+    "bias": 16.8,
     "macd_signal": "bullish",
-    "kdj_j": 97.5,
-    "signal": "neutral",
+    "kdj_j": 114.8,
+    "signal": "overbought",
     "ok": true
   },
   "poet": {
-    "price": 9.21,
-    "prev_close": 7.11,
-    "change": 29.54,
-    "volume": 83859700,
-    "ma5": 7.47,
-    "ma20": 8.33,
-    "ma60": 6.88,
+    "price": 9.72,
+    "prev_close": 9.21,
+    "change": 5.54,
+    "volume": 67829600,
+    "ma5": 8.09,
+    "ma20": 8.51,
+    "ma60": 6.94,
     "kd": {
-      "k": 31.1,
-      "d": 16.5,
-      "j": 60.3
+      "k": 36.7,
+      "d": 25.3,
+      "j": 59.5
     },
-    "rsi6": 56.2,
+    "rsi6": 59.3,
     "macd": {
-      "dif": -23.45,
-      "signal": 61.84,
-      "hist": 38.38
+      "dif": -12.35,
+      "signal": 58.75,
+      "hist": 46.39
     },
-    "atr": 1.5758,
-    "vwap": 9.3972,
+    "atr": 1.554,
+    "vwap": 9.4334,
     "bb": {
-      "upper": 12.9735,
-      "middle": 8.334,
-      "lower": 3.6945
+      "upper": 13.0799,
+      "middle": 8.509,
+      "lower": 3.9381
     },
-    "bias": 10.56,
+    "bias": 14.22,
     "macd_signal": "bullish",
-    "kdj_j": 60.3,
+    "kdj_j": 59.5,
     "signal": "neutral",
     "ok": true
   },
   "arm": {
-    "price": 208.84,
-    "prev_close": 203.26,
-    "change": 2.75,
-    "volume": 7531000,
-    "ma5": 207.06,
-    "ma20": 184.56,
-    "ma60": 148.47,
+    "price": 237.3,
+    "prev_close": 208.84,
+    "change": 13.63,
+    "volume": 25159100,
+    "ma5": 214.18,
+    "ma20": 188.98,
+    "ma60": 150.35,
     "kd": {
-      "k": 36.6,
-      "d": 45.8,
-      "j": 18.3
+      "k": 95.2,
+      "d": 57.9,
+      "j": 169.8
     },
-    "rsi6": 59.7,
+    "rsi6": 75.9,
     "macd": {
-      "dif": 52.77,
-      "signal": 1712.29,
-      "hist": 1765.06
+      "dif": 180.25,
+      "signal": 1757.36,
+      "hist": 1937.61
     },
-    "atr": 12.9843,
-    "vwap": 201.5069,
+    "atr": 14.2469,
+    "vwap": 207.8992,
     "bb": {
-      "upper": 236.5179,
-      "middle": 184.5618,
-      "lower": 132.6056
+      "upper": 243.0494,
+      "middle": 188.9812,
+      "lower": 134.9131
     },
-    "bias": 13.16,
+    "bias": 25.57,
     "macd_signal": "bullish",
-    "kdj_j": 18.3,
-    "signal": "neutral",
+    "kdj_j": 169.8,
+    "signal": "overbought",
     "ok": true
   },
   "aapl": {
-    "price": 284.18,
-    "prev_close": 276.83,
-    "change": 2.66,
-    "volume": 49101300,
-    "ma5": 276.53,
-    "ma20": 268.79,
-    "ma60": 262.53,
+    "price": 287.51,
+    "prev_close": 284.18,
+    "change": 1.17,
+    "volume": 58259700,
+    "ma5": 280.0,
+    "ma20": 270.22,
+    "ma60": 262.75,
     "kd": {
-      "k": 86.3,
-      "d": 69.1,
-      "j": 120.6
+      "k": 97.7,
+      "d": 79.0,
+      "j": 135.1
     },
-    "rsi6": 74.3,
+    "rsi6": 77.8,
     "macd": {
-      "dif": 125.85,
-      "signal": 399.04,
-      "hist": 524.89
+      "dif": 160.37,
+      "signal": 439.13,
+      "hist": 599.5
     },
-    "atr": 6.6507,
-    "vwap": 272.745,
+    "atr": 6.6728,
+    "vwap": 274.3558,
     "bb": {
-      "upper": 282.7797,
-      "middle": 268.7915,
-      "lower": 254.8033
+      "upper": 285.649,
+      "middle": 270.222,
+      "lower": 254.795
     },
-    "bias": 5.73,
+    "bias": 6.4,
     "macd_signal": "bullish",
-    "kdj_j": 120.6,
+    "kdj_j": 135.1,
     "signal": "overbought",
     "ok": true
   },
   "tsla": {
-    "price": 389.37,
-    "prev_close": 392.51,
-    "change": -0.8,
-    "volume": 47443000,
-    "ma5": 385.43,
-    "ma20": 376.71,
-    "ma60": 388.44,
+    "price": 398.73,
+    "prev_close": 389.37,
+    "change": 2.4,
+    "volume": 53304000,
+    "ma5": 390.61,
+    "ma20": 379.48,
+    "ma60": 388.13,
     "kd": {
-      "k": 66.5,
-      "d": 76.7,
-      "j": 46.2
+      "k": 91.1,
+      "d": 80.6,
+      "j": 112.0
     },
-    "rsi6": 61.2,
+    "rsi6": 71.2,
     "macd": {
-      "dif": 220.43,
-      "signal": 0.48,
-      "hist": 220.91
+      "dif": 264.37,
+      "signal": 66.57,
+      "hist": 330.94
     },
-    "atr": 14.186,
-    "vwap": 385.3446,
+    "atr": 14.4342,
+    "vwap": 385.7222,
     "bb": {
-      "upper": 410.4077,
-      "middle": 376.709,
-      "lower": 343.0103
+      "upper": 410.7545,
+      "middle": 379.483,
+      "lower": 348.2116
     },
-    "bias": 3.36,
+    "bias": 5.07,
     "macd_signal": "bullish",
-    "kdj_j": 46.2,
-    "signal": "neutral",
+    "kdj_j": 112.0,
+    "signal": "overbought",
     "ok": true
   },
   "nbis": {
-    "price": 175.92,
-    "prev_close": 176.42,
-    "change": -0.28,
-    "volume": 11682100,
-    "ma5": 157.25,
-    "ma20": 152.74,
-    "ma60": 120.04,
+    "price": 195.09,
+    "prev_close": 175.92,
+    "change": 10.9,
+    "volume": 19264200,
+    "ma5": 168.03,
+    "ma20": 156.25,
+    "ma60": 121.75,
     "kd": {
-      "k": 91.5,
-      "d": 82.6,
-      "j": 109.1
+      "k": 98.6,
+      "d": 94.5,
+      "j": 106.6
     },
-    "rsi6": 75.9,
+    "rsi6": 83.8,
     "macd": {
-      "dif": 69.7,
-      "signal": 986.91,
-      "hist": 1056.61
+      "dif": 250.55,
+      "signal": 1049.55,
+      "hist": 1300.09
     },
-    "atr": 12.2561,
-    "vwap": 155.2575,
+    "atr": 12.8721,
+    "vwap": 157.6526,
     "bb": {
-      "upper": 179.1317,
-      "middle": 152.743,
-      "lower": 126.3543
+      "upper": 185.4358,
+      "middle": 156.2475,
+      "lower": 127.0592
     },
-    "bias": 15.18,
+    "bias": 24.86,
     "macd_signal": "bullish",
-    "kdj_j": 109.1,
+    "kdj_j": 106.6,
     "signal": "overbought",
     "ok": true
   },
   "smr": {
-    "price": 11.87,
-    "prev_close": 12.18,
-    "change": -2.55,
-    "volume": 18436000,
-    "ma5": 11.99,
-    "ma20": 11.56,
-    "ma60": 12.17,
+    "price": 13.52,
+    "prev_close": 11.87,
+    "change": 13.9,
+    "volume": 45265000,
+    "ma5": 12.43,
+    "ma20": 11.74,
+    "ma60": 12.1,
     "kd": {
-      "k": 30.9,
-      "d": 36.6,
-      "j": 19.4
+      "k": 94.7,
+      "d": 55.2,
+      "j": 173.7
     },
-    "rsi6": 47.9,
+    "rsi6": 66.9,
     "macd": {
-      "dif": 6.76,
-      "signal": 10.0,
-      "hist": 16.76
+      "dif": 14.34,
+      "signal": 13.58,
+      "hist": 27.92
     },
-    "atr": 1.086,
-    "vwap": 12.3357,
+    "atr": 1.137,
+    "vwap": 12.4928,
     "bb": {
-      "upper": 14.0218,
-      "middle": 11.556,
-      "lower": 9.0902
+      "upper": 14.2174,
+      "middle": 11.739,
+      "lower": 9.2606
     },
-    "bias": 2.68,
+    "bias": 15.16,
     "macd_signal": "bullish",
-    "kdj_j": 19.4,
-    "signal": "neutral",
-    "ok": true
-  },
-  "avgo": {
-    "price": 427.36,
-    "prev_close": 416.5,
-    "change": 2.61,
-    "volume": 21082500,
-    "ma5": 417.6,
-    "ma20": 400.63,
-    "ma60": 349.69,
-    "kd": {
-      "k": 84.4,
-      "d": 74.8,
-      "j": 103.7
-    },
-    "rsi6": 69.4,
-    "macd": {
-      "dif": -20.17,
-      "signal": 2143.88,
-      "hist": 2123.71
-    },
-    "atr": 13.1835,
-    "vwap": 411.2494,
-    "bb": {
-      "upper": 444.6259,
-      "middle": 400.6275,
-      "lower": 356.6291
-    },
-    "bias": 6.67,
-    "macd_signal": "bullish",
-    "kdj_j": 103.7,
+    "kdj_j": 173.7,
     "signal": "overbought",
     "ok": true
   },
-  "cohr": {
-    "price": 335.73,
-    "prev_close": 329.89,
-    "change": 1.77,
-    "volume": 5519000,
-    "ma5": 323.95,
-    "ma20": 321.84,
-    "ma60": 273.34,
+  "avgo": {
+    "price": 425.44,
+    "prev_close": 427.36,
+    "change": -0.45,
+    "volume": 20681100,
+    "ma5": 421.6,
+    "ma20": 404.37,
+    "ma60": 351.06,
     "kd": {
-      "k": 67.9,
-      "d": 57.6,
-      "j": 88.5
+      "k": 71.6,
+      "d": 73.0,
+      "j": 68.6
     },
-    "rsi6": 64.2,
+    "rsi6": 66.2,
     "macd": {
-      "dif": -212.72,
-      "signal": 1720.94,
-      "hist": 1508.22
+      "dif": -44.87,
+      "signal": 2132.66,
+      "hist": 2087.79
     },
-    "atr": 22.279,
-    "vwap": 328.8247,
+    "atr": 13.6633,
+    "vwap": 413.4736,
     "bb": {
-      "upper": 360.8161,
-      "middle": 321.8415,
-      "lower": 282.8669
+      "upper": 443.1375,
+      "middle": 404.368,
+      "lower": 365.5985
     },
-    "bias": 4.32,
+    "bias": 5.21,
     "macd_signal": "bullish",
-    "kdj_j": 88.5,
+    "kdj_j": 68.6,
     "signal": "neutral",
     "ok": true
   },
-  "amkr": {
-    "price": 76.71,
-    "prev_close": 70.96,
-    "change": 8.1,
-    "volume": 6103100,
-    "ma5": 71.82,
-    "ma20": 67.31,
-    "ma60": 53.66,
+  "cohr": {
+    "price": 344.67,
+    "prev_close": 335.73,
+    "change": 2.66,
+    "volume": 9589300,
+    "ma5": 331.9,
+    "ma20": 324.99,
+    "ma60": 275.04,
     "kd": {
-      "k": 82.3,
-      "d": 55.7,
-      "j": 135.6
+      "k": 84.9,
+      "d": 68.5,
+      "j": 117.8
     },
-    "rsi6": 74.0,
+    "rsi6": 70.8,
     "macd": {
-      "dif": -10.31,
-      "signal": 601.17,
-      "hist": 590.86
+      "dif": -125.31,
+      "signal": 1689.61,
+      "hist": 1564.3
     },
-    "atr": 4.2914,
-    "vwap": 70.8782,
+    "atr": 22.3291,
+    "vwap": 330.8766,
     "bb": {
-      "upper": 81.6024,
-      "middle": 67.314,
-      "lower": 53.0256
+      "upper": 360.5225,
+      "middle": 324.9855,
+      "lower": 289.4485
     },
-    "bias": 13.97,
+    "bias": 6.06,
     "macd_signal": "bullish",
-    "kdj_j": 135.6,
+    "kdj_j": 117.8,
+    "signal": "overbought",
+    "ok": true
+  },
+  "amkr": {
+    "price": 77.22,
+    "prev_close": 76.71,
+    "change": 0.66,
+    "volume": 5284300,
+    "ma5": 73.15,
+    "ma20": 68.55,
+    "ma60": 54.08,
+    "kd": {
+      "k": 85.9,
+      "d": 70.0,
+      "j": 117.6
+    },
+    "rsi6": 75.0,
+    "macd": {
+      "dif": -0.8,
+      "signal": 600.97,
+      "hist": 600.17
+    },
+    "atr": 4.3091,
+    "vwap": 71.7968,
+    "bb": {
+      "upper": 81.7171,
+      "middle": 68.554,
+      "lower": 55.3909
+    },
+    "bias": 12.65,
+    "macd_signal": "bullish",
+    "kdj_j": 117.6,
     "signal": "overbought",
     "ok": true
   },
@@ -638,132 +638,132 @@
     "ok": true
   },
   "wolf": {
-    "price": 36.63,
-    "prev_close": 35.94,
-    "change": 1.92,
-    "volume": 10547700,
-    "ma5": 32.9,
-    "ma20": 27.45,
-    "ma60": 21.06,
+    "price": 43.08,
+    "prev_close": 36.63,
+    "change": 17.61,
+    "volume": 14833800,
+    "ma5": 36.39,
+    "ma20": 28.57,
+    "ma60": 21.53,
     "kd": {
-      "k": 76.1,
-      "d": 85.4,
-      "j": 57.6
+      "k": 98.4,
+      "d": 86.9,
+      "j": 121.3
     },
-    "rsi6": 75.1,
+    "rsi6": 84.0,
     "macd": {
-      "dif": 90.37,
-      "signal": 293.77,
-      "hist": 384.14
+      "dif": 129.91,
+      "signal": 326.25,
+      "hist": 456.16
     },
-    "atr": 3.5134,
-    "vwap": 30.2381,
+    "atr": 4.0753,
+    "vwap": 31.8602,
     "bb": {
-      "upper": 36.4303,
-      "middle": 27.4465,
-      "lower": 18.4627
+      "upper": 39.2979,
+      "middle": 28.5725,
+      "lower": 17.8471
     },
-    "bias": 33.44,
+    "bias": 50.79,
     "macd_signal": "bullish",
-    "kdj_j": 57.6,
-    "signal": "neutral",
+    "kdj_j": 121.3,
+    "signal": "overbought",
     "ok": true
   },
   "oust": {
-    "price": 28.6,
-    "prev_close": 28.15,
-    "change": 1.6,
-    "volume": 5883300,
-    "ma5": 27.14,
-    "ma20": 25.25,
-    "ma60": 21.74,
+    "price": 29.4,
+    "prev_close": 28.6,
+    "change": 2.8,
+    "volume": 6034200,
+    "ma5": 27.91,
+    "ma20": 25.71,
+    "ma60": 21.88,
     "kd": {
-      "k": 66.3,
-      "d": 52.1,
-      "j": 94.8
+      "k": 80.5,
+      "d": 68.7,
+      "j": 104.1
     },
-    "rsi6": 69.3,
+    "rsi6": 73.6,
     "macd": {
-      "dif": 13.91,
-      "signal": 161.95,
-      "hist": 175.86
+      "dif": 18.75,
+      "signal": 166.64,
+      "hist": 185.39
     },
-    "atr": 2.0434,
-    "vwap": 27.4124,
+    "atr": 2.2074,
+    "vwap": 27.6324,
     "bb": {
-      "upper": 30.613,
-      "middle": 25.252,
-      "lower": 19.891
+      "upper": 30.8425,
+      "middle": 25.7088,
+      "lower": 20.575
     },
-    "bias": 13.27,
+    "bias": 14.35,
     "macd_signal": "bullish",
-    "kdj_j": 94.8,
-    "signal": "neutral",
+    "kdj_j": 104.1,
+    "signal": "overbought",
     "ok": true
   },
   "irdm": {
-    "price": 39.23,
-    "prev_close": 39.89,
-    "change": -1.65,
-    "volume": 1415700,
-    "ma5": 38.8,
-    "ma20": 38.59,
-    "ma60": 29.63,
+    "price": 40.59,
+    "prev_close": 39.23,
+    "change": 3.47,
+    "volume": 1862500,
+    "ma5": 39.64,
+    "ma20": 38.89,
+    "ma60": 29.96,
     "kd": {
-      "k": 50.4,
-      "d": 47.7,
-      "j": 55.9
+      "k": 95.4,
+      "d": 65.0,
+      "j": 156.2
     },
-    "rsi6": 53.9,
+    "rsi6": 63.3,
     "macd": {
-      "dif": -51.91,
-      "signal": 281.73,
-      "hist": 229.82
+      "dif": -43.14,
+      "signal": 270.94,
+      "hist": 227.81
     },
-    "atr": 2.3159,
-    "vwap": 40.3015,
+    "atr": 2.2876,
+    "vwap": 40.1291,
     "bb": {
-      "upper": 44.0788,
-      "middle": 38.591,
-      "lower": 33.1032
+      "upper": 44.1245,
+      "middle": 38.8895,
+      "lower": 33.6545
     },
-    "bias": 1.66,
+    "bias": 4.37,
     "macd_signal": "bullish",
-    "kdj_j": 55.9,
-    "signal": "neutral",
+    "kdj_j": 156.2,
+    "signal": "overbought",
     "ok": true
   },
   "coin": {
-    "price": 197.75,
-    "prev_close": 202.99,
-    "change": -2.58,
-    "volume": 10003000,
-    "ma5": 192.3,
-    "ma20": 191.84,
-    "ma60": 184.37,
+    "price": 197.96,
+    "prev_close": 197.75,
+    "change": 0.11,
+    "volume": 7739400,
+    "ma5": 195.54,
+    "ma20": 192.98,
+    "ma60": 184.88,
     "kd": {
-      "k": 64.4,
-      "d": 59.3,
-      "j": 74.6
+      "k": 65.1,
+      "d": 67.8,
+      "j": 59.7
     },
-    "rsi6": 54.7,
+    "rsi6": 55.0,
     "macd": {
-      "dif": 13.51,
-      "signal": 268.25,
-      "hist": 281.77
+      "dif": 17.34,
+      "signal": 272.59,
+      "hist": 289.92
     },
-    "atr": 11.8649,
-    "vwap": 198.869,
+    "atr": 11.3924,
+    "vwap": 198.9499,
     "bb": {
-      "upper": 216.5144,
-      "middle": 191.8375,
-      "lower": 167.1606
+      "upper": 216.542,
+      "middle": 192.981,
+      "lower": 169.42
     },
-    "bias": 3.08,
+    "bias": 2.58,
     "macd_signal": "bullish",
-    "kdj_j": 74.6,
+    "kdj_j": 59.7,
     "signal": "neutral",
     "ok": true
   },
-  "last_updated": "2026-05-06T14:31:37.206096+08:00"
+  "last_updated": "2026-05-07T14:32:05.669386+08:00"
 }
